@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="50mm"
+   height="50mm"
+   viewBox="0 0 50 50"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   sodipodi:docname="buttonA.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     width="50mm"
+     inkscape:zoom="2.5820338"
+     inkscape:cx="55.576344"
+     inkscape:cy="13.748852"
+     inkscape:window-width="1592"
+     inkscape:window-height="1251"
+     inkscape:window-x="529"
+     inkscape:window-y="52"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="91.083494"
+       y="66.067605"
+       width="30.788787"
+       height="61.256857"
+       id="rect7063" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text7061"
+       style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;white-space:pre;shape-inside:url(#rect7063)" />
+    <rect
+       style="fill:none;stroke:#cacad2;stroke-width:2.01937;stroke-miterlimit:4;stroke-dasharray:6.05811, 2.01937;stroke-dashoffset:0"
+       id="rect7172"
+       width="37.980629"
+       height="32.980629"
+       x="6.009685"
+       y="6.009685" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.08463px;line-height:1.25;font-family:sans-serif;fill:#cacad2;fill-opacity:1;stroke:none;stroke-width:0.869057"
+       x="28.906233"
+       y="40.876858"
+       id="text7974"
+       transform="scale(0.8654785,1.1554302)"><tspan
+         sodipodi:role="line"
+         id="tspan7972"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.08463px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#cacad2;stroke-width:0.869057;fill-opacity:1"
+         x="28.906233"
+         y="40.876858">AREA OF INTEREST</tspan></text>
+  </g>
+</svg>

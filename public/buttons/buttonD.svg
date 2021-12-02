@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="50mm"
+   height="50mm"
+   viewBox="0 0 50 50"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c4e8f9e, 2021-05-24)"
+   sodipodi:docname="buttonD.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     width="50mm"
+     inkscape:zoom="2.5820338"
+     inkscape:cx="47.055929"
+     inkscape:cy="62.353947"
+     inkscape:window-width="2560"
+     inkscape:window-height="1412"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1"
+     inkscape:snap-smooth-nodes="true"
+     inkscape:snap-page="false"
+     inkscape:snap-bbox="true" />
+  <defs
+     id="defs2">
+    <rect
+       x="91.083494"
+       y="66.067605"
+       width="30.788787"
+       height="61.256857"
+       id="rect7063" />
+    <rect
+       x="91.083496"
+       y="66.067604"
+       width="30.788788"
+       height="61.256859"
+       id="rect7063-1" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text7061"
+       style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;white-space:pre;shape-inside:url(#rect7063)" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.21445px;line-height:1.25;font-family:sans-serif;fill:#cacad2;fill-opacity:1;stroke:none;stroke-width:1.06216"
+       x="23.518869"
+       y="49.993191"
+       id="text7974"
+       transform="scale(1.0577904,0.94536689)"><tspan
+         sodipodi:role="line"
+         id="tspan7972"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.21445px;font-family:Futura;-inkscape-font-specification:Futura;text-align:center;text-anchor:middle;fill:#cacad2;fill-opacity:1;stroke-width:1.06216"
+         x="23.518869"
+         y="49.993191">DOWNLOAD</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,0.16815514,-5.0927664)"
+       id="text7061-4"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect7063-1);fill:#000000;fill-opacity:1;stroke:none" />
+    <rect
+       style="fill:#cdcdcd;fill-opacity:1;stroke:none;stroke-width:1.41285"
+       id="rect2539"
+       width="5"
+       height="13.013804"
+       x="5"
+       y="27.28804" />
+    <rect
+       style="fill:#cdcdcd;fill-opacity:1;stroke:none;stroke-width:2.72699"
+       id="rect2539-9"
+       width="10"
+       height="24.240999"
+       x="20.167999"
+       y="5" />
+    <rect
+       style="fill:#cdcdcd;fill-opacity:1;stroke:none;stroke-width:2.47698"
+       id="rect2539-1"
+       width="40"
+       height="5"
+       x="5"
+       y="35.383244" />
+    <rect
+       style="fill:#cdcdcd;fill-opacity:1;stroke:none;stroke-width:1.41285"
+       id="rect2539-6"
+       width="5"
+       height="13.013804"
+       x="40"
+       y="27.28804" />
+    <path
+       sodipodi:type="star"
+       style="fill:#cdcdcd;fill-opacity:1;stroke:none;stroke-width:5.66929"
+       id="path4039"
+       inkscape:flatsided="true"
+       sodipodi:sides="3"
+       sodipodi:cx="57.566872"
+       sodipodi:cy="96.568817"
+       sodipodi:r1="40.252728"
+       sodipodi:r2="20.126364"
+       sodipodi:arg1="1.5824237"
+       sodipodi:arg2="2.6296213"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       transform="matrix(0.43032311,0,0.0123062,0.18244969,-0.89329626,8.0340336)"
+       inkscape:transform-center-x="0.14696296"
+       inkscape:transform-center-y="1.7989241"
+       d="M 57.098849,136.81882 22.943355,76.038494 92.658411,76.849134 Z" />
+  </g>
+</svg>

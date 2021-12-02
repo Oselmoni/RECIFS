@@ -1,0 +1,644 @@
+* {
+    box-sizing: border-box;
+    font-family:Futura;
+    margin: 0;
+    overflow: hidden
+  }
+
+div {background-color: inherit;}
+
+h5 {
+  color: white;
+  background-color: inherit;
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+h6 {
+  color: white;
+  background-color: inherit;
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+
+select {
+  background-color: inherit;
+  color: white
+}
+
+select:disabled {
+  color: grey
+}
+option {background-color: inherit;}
+
+input {
+  background-color: inherit;
+  color: white
+}
+
+input[type='color']:disabled {
+  background-color: grey;
+}
+
+button {
+  background-color: inherit;
+  color: white;
+  border: 2px solid #b7c2d3;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  color: yellow;
+  cursor: pointer
+}
+
+table {background-color: inherit;}
+th {background-color: inherit;}
+tr {background-color: inherit;}
+td {background-color: inherit;}
+tbody {background-color: inherit;}
+
+
+  #upperpan {
+    height: 20vh;
+    min-height: 3cm;
+    max-height: 5cm;
+    background-color: #b7c2d3;
+
+  }
+
+  #titlepan {
+    color: white;
+    position: relative;
+    text-align: left;
+    height: 100%;
+    width: 20%;
+    min-width: 3cm;
+    float:left;
+    padding: 0.1cm;
+    }
+
+  #mainT {
+    font-size: 2.7cm; 
+    letter-spacing: 0.3cm;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  #subT {
+    font-size: 0.4cm; 
+    text-align: center;
+  }
+
+  #buttonsPAN {
+    text-align: center;
+    width: 80%;
+    padding: 5px;
+    height: 100%;
+    float: right;
+  }
+
+  .topBUT {
+    width: 13.5%;
+    height:100%;
+    background-color: #0f497e;
+    border: 2px solid black;
+    transition-duration: 0.4s;
+  }
+
+  .topBUT[disabled] {
+    width: 13.5%;
+    height:100%;
+    background-color: grey;
+    border: 2px solid black;
+    transition-duration: 0.4s;
+  }
+
+  .topBUT[disabled]:hover {
+    background-color: red;
+  }
+
+  .topBUTf {
+    width: 100%;
+    height: 100%;
+    border-color: black;
+    background-color: inherit  }
+
+  .topBUT:hover {
+      background-color: #b7c2d3;
+    }
+
+
+
+  #sidePAN {
+    overflow: auto;
+    background-color: #b7c2d3;
+    border-color: #b7c2d3;
+    z-index: 5;
+    position: absolute; 
+    right: 0; 
+    margin-left: auto; 
+    width: 10cm; 
+    max-height: 80vh;
+  }
+
+  .PANcontent {
+    background-color:inherit;
+    color: white;
+    display: none;
+  }
+  
+  .visCON {
+    background-color:inherit;
+    position: absolute;
+    right:5px;
+    top: 5px;
+    margin-left: auto;
+  }
+
+  .visCONbut {
+    background-color: inherit;
+    border: 2px solid #b7c2d3;
+    color: #b7c2d3;
+    transition-duration: 0.4s;
+  }
+
+  .visCONbut:hover {
+    color: white;
+  }
+
+  #POIpan {
+    display: none;
+    position: relative;
+    padding:10px;
+    overflow: auto;
+    background-color: #0f497e;
+    border: 2px solid #b7c2d3;
+  }
+
+  .poiBUT{
+    height: 1cm;
+    width: 80%;
+    font-size: 0.5cm;
+    margin: auto;
+    background-color: inherit;
+    border: 2px solid #b7c2d3;
+    color: white;
+    transition-duration: 0.4s;
+    vertical-align: middle;
+    align-content: center;
+  }
+
+  #displaySCb {  height: 1cm;
+    width: 80%;
+    font-size: 0.5cm;
+    margin: auto;
+    background-color: inherit;
+    border: 2px solid #b7c2d3;
+    color: white;
+    transition-duration: 0.4s;
+    vertical-align: middle;
+    align-content: center;
+  }
+
+  .poiBUT:hover {
+    color: yellow;
+  }
+
+
+  .poiBUTf{
+    height: 80%;
+    background-color: inherit;
+  }
+
+
+  #ENVpan {
+    display: none;
+    position: relative;
+    padding:10px;
+    overflow: auto;
+    background-color: #0f497e;
+    border: 2px solid #b7c2d3;
+    color:white
+  }
+
+  .ENVmodeBUT {
+    width: 40%;
+    background-color: inherit;
+    border: 2px solid #b7c2d3;
+    color: white;
+    transition-duration: 0.4s;
+  }
+
+  .ENVmodeBUT:hover {
+    color: yellow;
+  }
+
+  #modepanel {
+    position: relative;
+    background-color: inherit;
+  }
+  
+  #Layerpan {
+    position: relative;
+    background-color: inherit;
+    overflow: auto;
+    min-height: 30vh;
+  }
+
+  #layerlist {
+    background-color: inherit;
+  }
+
+
+  .ENVrow {
+    background-color: inherit;
+  }
+
+
+  .ENVele {
+    background-color: inherit;
+    font-size: 0.35cm;
+  }
+
+  .ENVinfoB {
+    background-color: #b7c2d3;
+    color: #0f497e;
+    border: 2px transparent;   
+    border-radius: 50%;
+    width: 0.5cm;
+    height: 0.5cm;
+    transition-duration: 0.4s;
+  }
+
+  .ENVinfoB:hover {
+    color: yellow;
+  }
+
+  .ENVstatB {
+    background-color: inherit;
+    border: 2px solid #b7c2d3;
+    color: white;
+    transition-duration: 0.4s;
+    }
+
+  .ENVstatB:hover {
+      color: yellow;
+    }
+
+
+  #advancedpanel {
+    background-color: inherit;
+  }
+
+  #advBUF {
+    background-color: inherit;
+  }
+
+  #advCS {
+    background-color: inherit;
+  }
+
+  #advTIME {
+    background-color: inherit;
+  }
+
+ 
+  #runADVbut {
+    font-size: 1cm;
+  }
+
+
+  #SCpan {
+    display: none;
+    position: relative;
+    padding:10px;
+    overflow: auto;
+    background-color: #0f497e;
+    border: 2px solid #b7c2d3;
+    color:white
+  }
+
+  #SCmonthsSEL {width: 2cm;}
+
+
+  #bgpan {
+    display: none;
+    position: relative;
+    padding:10px;
+    overflow: auto;
+    background-color: #0f497e;
+    border: 2px solid #b7c2d3;
+    color:white
+  }
+
+#bgid {width: 3cm}
+#transppan {
+  display: none;
+}
+
+#exportPAN {
+  display: none;
+  position: relative;
+  padding:10px;
+  overflow: auto;
+  background-color: #0f497e;
+  border: 2px solid #b7c2d3;
+  color:white
+}
+
+
+#map {
+    width : 100%;
+    height : 80vh;
+    position: relative;
+}
+  
+
+
+  .ol-dragbox {
+    background-color: rgba(255,255,255,0.4);
+    border-color: rgba(100,150,0,1);
+  }
+
+  #legend {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(255,255,255,0.8);
+    left: 0.5cm ;
+    bottom: 25% ;
+    border: 1px solid #888;
+    width: 15%;
+    height: 40%;
+  }
+  
+  #legendtitle {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    text-align: center;
+    
+  }
+  
+  #legendplot {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 90%;
+  }
+
+
+  #legendSC {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: rgba(255,255,255,0.8);
+    left: 0.5cm ;
+    bottom: 5% ;
+    border: 1px solid #888;
+    width: 30%;
+    height: 15%;
+  }
+  
+  #legendtitleSC {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    text-align: center;
+    
+  }
+  
+  #legendplotSC {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 90%;
+  }
+
+
+  .modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 15; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    color: white;
+  }
+
+  .modalcontent {
+    position: relative;
+  background-color: #0f497e;
+  border: 2px solid #b7c2d3; 
+     text-align: center;
+    margin: auto;
+    padding: 10px;
+    width: 40%;
+    border: 1px solid #888;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    overflow: auto; /* Enable scroll if needed */
+    z-index: 10;
+  }
+
+  .ol-scale-line.ol-unselectable {
+    left: 50%;
+    transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+  }
+
+
+  #addDown {
+    background-color: #0f497e;
+    z-index: 5;
+    position: absolute; 
+    top: 2cm; 
+    left: 0;
+    width:2cm;
+    height: 2cm;
+  }
+
+  #addDown:hover {
+    background-color: #b7c2d3 ;
+  }
+
+
+  #addDownF {
+    background-color: inherit;
+    width: 100%;
+    height: 100%
+  }
+
+  #DlyrLIST {
+    height: 40vh;
+    width: 70%;
+    overflow: auto;
+  }
+
+  #dwnLIST {
+    height: 40vh;
+    width: 70%;
+    overflow: auto;
+  }
+
+  .modalcontent_TUTO {
+    position: relative;
+  background-color: #77a552;
+  border: 2px solid #317c1a; 
+  color: black;
+     text-align: center;
+    margin: auto;
+    padding: 10px;
+    width: 40%;
+    border: 1px solid #888;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    overflow: auto; /* Enable scroll if needed */
+    z-index: 10;
+  }
+
+
+
+  #titlepan_TUTO {
+    color: #77a552;
+    position: relative;
+    text-align: left;
+    height: 100%;
+    width: 20%;
+    min-width: 3cm;
+    float:left;
+    padding: 0.1cm;
+
+    }
+
+  #mainT_TUTO {
+    font-size: 2.7cm; 
+    letter-spacing: 0.3cm;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  #subT_TUTO {
+    text-align: center;
+    font-size: 0.5cm; 
+    letter-spacing: 0.3cm;
+  }
+
+  .tutoTXT {
+    color: white;
+  }
+
+  #tutoBUT {
+    background-color: #3b7a07;
+    z-index: 5;
+    position: absolute; 
+    bottom: 0cm; 
+    left: 0;
+    width:2cm;
+    height: 2cm;
+  }
+
+  #tutoBUT:hover {
+    background-color: #67f806;
+    cursor: pointer
+  }
+
+  #addDown[disabled] {
+    background-color: grey;
+    border: 2px solid black;
+    transition-duration: 0.4s;
+  }
+
+  #addDown[disabled]:hover {
+    background-color: red;
+  }
+
+  .ENVmodeBUT[disabled] {
+    background-color: grey;
+    border: 2px solid black;
+    transition-duration: 0.4s;
+  }
+
+  .ENVmodeBUT[disabled]:hover {
+    background-color: red;
+  }
+
+
+  .visCONbut[disabled] {
+    background-color: grey;
+    border: 2px solid black;
+    transition-duration: 0.4s;
+  }
+
+  .visCONbut[disabled]:hover {
+    background-color: red;
+  }
+
+  .poiBUT[disabled] {
+    background-color: grey;
+    border: 2px solid black;
+    transition-duration: 0.4s;
+  }
+
+  .poiBUT[disabled]:hover {
+    background-color: red;
+  }
+
+
+  .exportBUTS[disabled] {
+    background-color: grey;
+    border: 2px solid black;
+    transition-duration: 0.4s;
+  }
+
+  .exportBUTS[disabled]:hover {
+    background-color: red;
+  }
+ 
+
+  .supPAN1 {
+    text-align: right;
+    margin-right: 2%;
+    width: 23%;
+    display: block;
+    float:left;
+    font-size: 1.5cm
+  }
+
+  .supPAN2 {
+    text-align: left;
+    width: 70%; 
+    display: block; 
+    float: left;
+  }
+
+  .supPAN3 {
+    text-align: left;
+    width: 40%; 
+    display: block; 
+    float: left;
+  }
+
+  .supPAN4 {
+    text-align: left;
+    width: 28%; 
+    display: block; 
+    float: left;
+    margin-left: 2%;
+  }
+
+
+  .dwn_listB {
+    width: 2cm;
+    transition-duration: 0.4s;
+  }
+
+  .dwn_listB:hover {
+    background-color: #b7c2d3;
+  }

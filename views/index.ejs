@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RECIFS - Reef Environment Centralized InFormation System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="public/RECIFS.css">
+<link rel="stylesheet" href="public/src/ol.css" type="text/css">
+<script src="public/src/ol.js"></script>
+<script src="public/src/d3.v4.min.js"></script>
+<script src="public/src/jquery.min.js"></script>
+<script src="public/src/proj4.js"></script> 
+<script src="public/src/jspdf.min.js"></script> 
+<script src="public/src/dom-to-image.js"></script> 
+<script type="text/javascript" src="public/DB/metaVAR.json"></script>
+<script type="text/javascript" src="public/DB/metaSTAT.json"></script>
+<script type="text/javascript" src="public/DB/metaVARadv.json"></script>
+
+</head>
+<body style="font-family:Verdana;color:rgb(8, 8, 1)">
+
+
+<div id='upperpan'> 
+
+    <div id='titlepan'>
+          <div id='mainT'><span>R</span><span><i>E</i></span><span>C</span><span><b>I</b></span><span>F</span><span>S</span></div>
+          <div id='subT'><b>R</b>EEF <b>E</b>NVIRONMENT <b>C</b>ENTRALIZED <b>I</b>N<b>F</b>ORMATION <b>S</b>YSTEM</div>
+    </div>
+
+    <div id='buttonsPAN'>
+      <button title='Click here to draw an area of interest to the map' class='topBUT' id='drawAOIbutton' onclick="drawAOIpoly()"><img class='topBUTf' src="public/buttons/buttonA.svg"> </button>
+      <button title='Click here to indicate points of interest' class='topBUT' id='topBUTpoi' onclick='showPOI()'><img class='topBUTf' src="public/buttons/buttonP.svg"> </button>
+      <button title='Click here to visualize different environmental chracteristics for the area of interest' disabled class='topBUT' id='topBUTenv' onclick='showENV()'><img class='topBUTf' src="public/buttons/buttonE.svg"> </button>
+      <button title='Click here to visualize sea currents for the area of interest' disabled class='topBUT' id='topBUTsc' onclick='showSC()'><img class='topBUTf' src="public/buttons/buttonC.svg"> </button>
+      <button title='Click here to  modify the background map and the layers opacity' class='topBUT' id='topBUTbg' onclick='showBG()'><img class='topBUTf' src="public/buttons/buttonS.svg"> </button>
+      <button title='Click here to download the data shown on the map' disabled class='topBUT' id='topBUTdwn' onclick='showDWN()'><img class='topBUTf' src="public/buttons/buttonD.svg"> </button>
+      <button title='Click here to see the support information' class='topBUT'><img class='topBUTf' src="public/buttons/buttonQ.svg" onclick="document.getElementById('supMOD').style.display='block'"> </button>
+
+
+    </div>
+  </div>
+
+  <div style="background-color: white;">
+  <div id='map'>
+
+    <div id='legend'>
+        <div id='legendtitle'>Title of Legend</div>
+        <div id='legendplot'></div>
+    </div>
+  
+    <div id='legendSC'>
+      <div id='legendtitleSC'>Title of LegendSC</div>
+      <div id='legendplotSC'></div>
+    </div>
+  
+    <button title='Click here to add the variable shown on the map to the download list' id='addDown' onclick='addCUSTOMdwnL()'><img id='addDownF' src="public/buttons/buttonADD.svg"></button>
+  
+  
+    <div id='sidePAN'> 
+
+    <div id='POIpan'>
+        <h5>POINTS OF INTEREST</h5>
+        <div class='visCON' id='visCONpoi'>
+          <button id='miniPOI' onclick="hideUnhidePOI()" class='visCONbut'>-</button>
+          <button id='hidePOI' onclick="removePOI()" class='visCONbut'>x</button>
+        </div>
+        <div id='POIcontent' class='PANcontent'>
+        <button id='POIaddB' onclick='addPOI()' class='poiBUT'>Add on map</button>
+        <button onclick='openMODALupload()' class='poiBUT'>Add from file</button>
+        <button id='POIremB' onclick='remPOI()' class='poiBUT'>Remove from map</button>
+        <button onclick='remALLPOI()' class='poiBUT'>Remove all</button>
+      </div>
+    </div>
+
+
+    <div id='ENVpan'>
+      <h5>ENVIRONMENT</h5>
+      <div class='visCON' id='visCONenv'>
+        <button id='miniENV' onclick="hideUnhideENV()" class='visCONbut'>-</button>
+        <button id='hideENV' onclick="removeENV()" class='visCONbut'>x</button>
+      </div>
+      <div id='ENVcontent' class='PANcontent'>
+      <div id='modepanel'>
+        <button id='stmbutton' class='ENVmodeBUT' style="background-color: green;" onclick="STMOD()">STANDARD</button>
+        <button id='ambutton' class='ENVmodeBUT' onclick="ADMOD()">ADVANCED</button>
+        <br><br>
+      </div>
+      
+      <div id='Layerpan'>
+        <table id='layerlist'>
+        </table>
+     
+    
+        <div id='advancedpanel' style='display:none'>
+          Select variable:
+          <select id='advSELVAR'></select>
+        <div id='advBUF' style='display:none'><br>
+          Select buffer size:
+          <select id='advSELbuf'></select>
+          <br><br><br>
+        </div>
+        <div id='advTIME' style='display:none'><br>
+          <input type='checkbox' id='allyearsCB' checked=true>Use all years <br>
+          Select starting year:
+          <select id='advSELsy' disabled></select> <br>
+          Select end year:
+          <select id='advSELey' disabled></select> <br><br>
+          <input type='checkbox' id='allmonthsCB' checked=true>Use all months <br>
+          Select months of interest:
+          <table>
+            <tr><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th></tr>
+            <tr>
+              <td><input type='checkbox' id='months01' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months02' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months03' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months04' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months05' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months06' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months07' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months08' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months09' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months10' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months11' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months12' class='cbmonths' disabled checked=true></td>
+            </tr>
+              
+               </table>
+          <br> Select function:
+          <select id='advSELfun'>
+            <option>Mean</option>
+            <option>Standard deviation</option>
+            <option>Median</option>    
+            <option>Maximum</option>
+            <option>Minimum</option>
+          </select> <br><br><br>
+        </div>
+        <div id='advCS'>
+          <input type='checkbox' id='customizeCSLcb'>Customize colorscale limits:<br>
+          Min:<input type="number" id='minCS' style="width: 20%;" disabled></input> Max:<input type="number" id='maxCS' style="width: 20%;" disabled></input><br>
+          <br><br>
+          <input type='checkbox' id='customizeCSCcb'>Customize colorscale:<br>
+          <input type="color" id='lowCOL' style="width: 1cm;" disabled> Low values<br>
+          <input type="color" id='midCOL' style="width: 1cm;" disabled> Mid values<br>
+          <input type="color" id='highCOL' style="width: 1cm;" disabled> High values<br>
+        </div> <br><br><br>
+        <div style="text-align: center; background-color: inherit;"><button id='runADVbut' onclick="advancedPOST()">RUN</button></div>
+        </div>
+        <br><br>
+       </div>
+      </div>
+    </div>
+  
+    <div id='SCpan'>
+      <h5>SEA CURRENTS</h5>
+      <div class='visCON' id='visCONsc'>
+        <button id='miniSC' onclick="hideUnhideSC()" class='visCONbut'>-</button>
+        <button id='hideSC' onclick="removeSC()"class='visCONbut'>x</button>
+      </div>
+      <div id='SCcontent' class='PANcontent'>
+        Use all months <input type='checkbox' id='custSCcb' checked=true onchange="cbSC()"><br>
+        <div id='SCmonthsDIV' style='display:none;'>Select month of interest:
+          <select id='SCmonthsSEL' disabled>
+            <option id='sc01'>January</option>
+            <option id='sc02'>February</option>
+            <option id='sc03'>March</option>
+            <option id='sc04'>April</option>
+            <option id='sc05'>May</option>
+            <option id='sc06'>June</option>
+            <option id='sc07'>July</option>
+            <option id='sc08'>August</option>
+            <option id='sc09'>September</option>
+            <option id='sc10'>October</option>
+            <option id='sc11'>November</option>
+            <option id='sc12'>December</option>
+          </select>
+        </div>
+          <button onclick='postSC()' id='displaySCb'>Display sea currents</button><br>
+      </div>
+      </div>
+    
+    <div id='bgpan'>
+        <h5>DISPLAY SETTINGS</h5>
+        <div class='visCON' id='visCONbg'>
+          <button id='miniBG' onclick="hideUnhideBG()" class='visCONbut'>-</button>
+          <button id='hideBG' onclick="removeBG()"class='visCONbut'>x</button>
+        </div>
+        <div id='BGcontent' class='PANcontent'>
+          <h6>Background map</h6>
+          <table>
+            <tr>
+              <td style="width: 40%;">Select type</td>
+              <td style="width: 40%;"> <select id='bgid' onchange='makebg()'>
+                <option value='osm'>Open Street Map</option>
+                <option value='shp'>Land</option>
+                <option value='ree'>Land and reefs</option>
+              </select></td>
+            </tr>
+            <tr>
+              <td style="width: 40%;">Greyscale</td>
+              <td style="width: 40%;"><input id='bggsid' type='checkbox' onchange='makebg()'></td>
+            </tr>
+
+          </table>
+      
+               <div id='transppan' style="display: none;">
+                <br>
+ 
+            <h6>Reef environment</h6>
+            <table>
+            <tr>
+            <td style="width: 40%;">Set opacity</td>
+            <td style="width: 40%;"><input id='reefTRA' type='number' step='1' style="width: 50%;" value=100 onchange="SetReefTransparency()">%</td>
+           </tr>
+           <tr>
+            <td>Show legend</td>
+            <td> <input id='cblegend' type='checkbox' onchange="hidelegend()">  </td>
+          </tr>
+        </table>
+          </div>
+ 
+        <div id='sctrans' style='display: none;'>
+          <br>
+          <h6>Sea currents</h6>
+          <table>
+              <tr>
+                <td style="width: 40%;">Set opacity </td>
+                <td style="width: 40%;"><input id='scTRA' type='number' step='1' style="width: 50%;" value=100 onchange="SetSCTransparency()">%</td>
+              </tr>
+              <tr>
+                <td style="width: 40%;">Show legend </td>
+                <td style="width: 40%"> <input id='cblegendSC' type='checkbox' onchange="hidelegendSC()"></td>
+              </tr>
+
+          </table>
+          
+          
+           
+          </div>
+
+     
+      </div>
+    </div>
+
+    
+    <div id='exportPAN'>
+      <h5>DOWNLOAD</h5>
+      <div class='visCON' id='visCONdwn'>
+        <button id='miniDWN' onclick="hideUnhideDWN()" class='visCONbut'>-</button>
+        <button id='hideDWN' onclick="removeDWN()"class='visCONbut'>x</button>
+      </div>
+      <div id='DWNcontent' class='PANcontent'>
+      
+      <button onclick='exportPDF()'>Map as PDF</button>
+      <button onclick='openDWNwindow()'>Reef data as CSV table</button>
+    </div>
+    </div>
+    
+    
+
+      
+    
+  
+  
+    </div>
+  
+
+    </div>
+  
+
+  </div>
+
+
+</div>
+  
+
+  
+
+
+  
+<div id='downloadMOD' class='modal'>
+  <div class='modalcontent'>
+      <h3>Data download</h3>
+      <p>Here you can download data from RECIFS. <br> <br>
+      <div>
+      <p>Select environmental variables to be downloaded: </p>
+
+      <div style="float:left; width:40%">
+        <h5>Standard variables </h5>
+        <select multiple id='DlyrLIST' size=10">
+        </select>
+        </div>
+      <div style="float:left; width:20%">
+        <br><br>
+        <button onclick='addSTANDARDdwnL()' class='dwn_listB'><img src='public/buttons/buttonDA.svg' style="width: 100%;"></button><br><br>
+        <button onclick='rmvFROMdwnL()' class='dwn_listB'><img src='public/buttons/buttonDR.svg' style="width: 100%;"></button>
+      </div>
+        <div style="float:left; width:40%">
+        <h5>Download list</h5>
+        <select multiple id='dwnLIST' size=10">
+        </select>
+      </div>
+    </div>
+      <br> <br>
+      Download only closest reefs to points of interest <input type='checkbox' id='cbPOI'></input>
+      <br> <br>
+      <button onclick="launchDWN()">Download data</button>      
+      <br> <br>
+      <button onclick="document.getElementById('downloadMOD').style.display='none'">Close</button>
+  </div>
+</div>
+
+
+<div id='uploadMOD' class='modal' style="display: none;">
+  <div class='modalcontent'>
+    <h5>Upload point of interests from file</h5>
+    <br>
+    <div style='text-align: left;'>
+    <p>Use the button here below to upload a table with the coordinates of the points of interest to be shown on the map.</p>
+    <p>Please note that the input file must comply with the following requirements:</p>
+    <ul style='list-style-position: inside;'>
+      <li>Table in .csv (comma-separated-variables) form</li>
+      <li>First row is the header</li>
+      <li>One column named "ID" contains the site identier</li>
+      <li>One column named "LON" contains the site longitude (in decimal degrees, WGS84 format)</li>
+      <li>One column named "LAT" contains the site latitude (in decimal degrees, WGS84 format)</li>
+    </ul>
+    </div>
+    <br>
+    <input type="file" id="myFile">
+    <button onclick='uploadPOIs()'>Send</button>
+    <button onclick='document.getElementById("uploadMOD").style.display="none"'>Cancel</button>
+  </div>
+  </div>
+
+
+<div id='infoMOD' class='modal' style="display: none;">
+  <div class='modalcontent'>
+    <h5 id='infoVARname'></h5>
+    <br>
+    <p id='infoVARtxt'></p>
+    <br>
+    <button onclick='document.getElementById("infoMOD").style.display = "none"'>Close</button>
+  </div>
+</div>
+
+
+  <div id='supMOD' class='modal' style="display: none;">
+    <div class='modalcontent' style="width: 80%;">
+      <h5>Support information</h5>
+      <br>
+      <div style='align-content: left;'> 
+        <span class="supPAN1"><p>A<i>B</i>O<b>U</b>T</p></span>
+        <span class="supPAN2">
+          <p>RECIFS is the acronym for Reef Environment Centralized InFormation System.
+             RECIFS is a web-interface that provides access to environmental data describing the reef environment worldwide. 
+             The data displayed in RECIFS come from publicly databases and are available in complete open access.              
+            </p></span>
+      </div>
+      <br><br>
+      <div style='align-content: left;'> 
+        <span class="supPAN1" style='font-size: 1.3cm'><p>T<i>E</i>RMS OF <b>U</b>SE</p></span>
+        <span class="supPAN2">
+          <p>RECIFS and the data provided are in the public domain. RECIFS is available in complete open access and free of charge. 
+            Nevertheless, we ask that any derivative work (e.g. scientific publications, maps, reports) using the data from RECIFS attributes the credit to: 
+            (1) the original data source (refer to the <button class='ENVinfoB'>i</button> button in the environmental data window) and (2) RECIFS for processing and serving the data. 
+            The authors are not responsible for any problems relating to the accuracy of the data served through RECIFS.                      
+            </p></span>
+      </div>
+
+      <br><br>
+      <div style='align-content: left;'> 
+        <span class="supPAN1"><p>C<i>O</i>NT<b>A</b>CT</p></span>
+        <span class="supPAN2">
+          <p>Our contact information is available to report issues and bugs. Data providers wanting their datasets to be integrated in RECIFS are also welcomed to contact the authors. 
+            <br>
+            <a href= "mailto:oliver.selmoni@epfl.ch" style="color: yellow;">oliver.selmoni@epfl.ch</a>   
+            </p></span>
+      </div>
+
+      <br><br>
+      <div style='align-content: left;'> 
+        <span class="supPAN1"><p>A<i>U</i>TH<b>O</b>RS</p></span>
+        <span class="supPAN3">
+          <p>RECIFS was conceptualized by Oliver Selmoni (EPFL, Switzerland), Stephane Joost (EPFL, Switzerland), Véronique Berteaux-Lecellier (CNRS, France) and Gaël Lecellier (IRD). 
+            Data curation, software design and interface development were performed by O. Selmoni. 
+            </p></span>
+        <span class="supPAN4">
+          <img src="public/logos/EPFL.png" style="width: 40%;">
+          <img src="public/logos/CNRS.png" style="width: 20%;">
+          <img src="public/logos/IRD.png" style="width: 20%;">
+        </span>
+      </div>
+
+      <br><br>
+      <div style='align-content: left;'> 
+        <span class="supPAN1"><p>TU<i>T</i>ORI<b>A</b>L</p></span>
+        <span class="supPAN2">
+          <p>Want to discover the functionalities of RECIFS? <a href="/tutorial" style="color: greenyellow;">Click here</a> to access the online tutorial! 
+            </p></span>
+      </div>
+
+      <br>
+      <p></p>
+      <br>
+      <button onclick='document.getElementById("supMOD").style.display = "none"'>Close</button>
+    </div>
+  </div>
+
+<script src='public/index.js'></script>
+</body>
+</html>

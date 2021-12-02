@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RECIFS - Tutorial Mode</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="public/RECIFS.css">
+<link rel="stylesheet" href="public/src/ol.css" type="text/css">
+<script src="public/src/ol.js"></script>
+<script src="public/src/d3.v4.min.js"></script>
+<script src="public/src/jquery.min.js"></script>
+<script src="public/src/proj4.js"></script> 
+<script src="public/src/jspdf.min.js"></script> 
+<script src="public/src/dom-to-image.js"></script> 
+<script type="text/javascript" src="public/DB/metaVAR.json"></script>
+<script type="text/javascript" src="public/DB/metaSTAT.json"></script>
+<script type="text/javascript" src="public/DB/metaVARadv.json"></script>
+
+</head>
+<body style="font-family:Verdana;color:rgb(8, 8, 1)">
+
+
+<div id='upperpan'> 
+
+    <div id='titlepan_TUTO'>
+          <div id='mainT_TUTO'><span>R</span><span><i>E</i></span><span>C</span><span><b>I</b></span><span>F</span><span>S</span></div>
+          <div id='subT_TUTO'>TUTORIAL mode</div>
+    </div>
+
+    <div id='buttonsPAN'>
+      <button title='Click here to draw an area of interest to the map' class='topBUT' id='drawAOIbutton' onclick="drawAOIpoly()"><img class='topBUTf' src="public/buttons/buttonA.svg"> </button>
+      <button title='Click here to indicate points of interest' class='topBUT' id='topBUTpoi' onclick='showPOI_tuto()'><img class='topBUTf' src="public/buttons/buttonP.svg"> </button>
+      <button title='Click here to visualize different environmental chracteristics for the area of interest' disabled class='topBUT' id='topBUTenv' onclick='showENV_tuto()'><img class='topBUTf' src="public/buttons/buttonE.svg"> </button>
+      <button title='Click here to visualize sea currents for the area of interest' disabled class='topBUT' id='topBUTsc' onclick='showSC()'><img class='topBUTf' src="public/buttons/buttonC.svg"> </button>
+      <button title='Click here to  modify the background map and the layers opacity' class='topBUT' id='topBUTbg' onclick='showBG()'><img class='topBUTf' src="public/buttons/buttonS.svg"> </button>
+      <button title='Click here to download the data shown on the map' disabled class='topBUT' id='topBUTdwn' onclick='showDWN()'><img class='topBUTf' src="public/buttons/buttonD.svg"> </button>
+      <button title='Click here to see the support information' disabled class='topBUT'><img class='topBUTf' src="public/buttons/buttonQ.svg"> </button>
+
+
+    </div>
+  </div>
+
+  <div style="background-color: white;">
+  <div id='map'>
+
+    <div id='legend'>
+        <div id='legendtitle'>Title of Legend</div>
+        <div id='legendplot'></div>
+    </div>
+  
+    <div id='legendSC'>
+      <div id='legendtitleSC'>Title of LegendSC</div>
+      <div id='legendplotSC'></div>
+    </div>
+  
+    <button title='Click here to add the variable shown on the map to the download list' disabled id='addDown' onclick='addCUSTOMdwnL()'><img id='addDownF' src="public/buttons/buttonADD.svg"></button>
+    <button title='Click here to visualize the Tutorial instructions' id='tutoBUT'><img id='addDownF' src="public/buttons/buttonT.svg" ></button>
+
+  
+    <div id='sidePAN'> 
+
+    <div id='POIpan'>
+        <h5>POINTS OF INTEREST</h5>
+        <div class='visCON' id='visCONpoi'>
+          <button id='miniPOI' onclick="hideUnhidePOI()" class='visCONbut'>-</button>
+          <button disabled id='hidePOI' onclick="removePOI()" class='visCONbut'>x</button>
+        </div>
+        <div id='POIcontent' class='PANcontent'>
+        <button id='POIaddB' onclick='addPOI()' class='poiBUT'>Add on map</button>
+        <button disabled id = 'POIaddU' onclick='openMODALupload()' class='poiBUT'>Add from file</button>
+        <button disabled id='POIremB' onclick='remPOI()' class='poiBUT'>Remove from map</button>
+        <button disabled id='POIremA' onclick='remALLPOI()' class='poiBUT'>Remove all</button>
+      </div>
+    </div>
+
+
+    <div id='ENVpan'>
+      <h5>ENVIRONMENT</h5>
+      <div class='visCON' id='visCONenv'>
+        <button id='miniENV' onclick="hideUnhideENV()" class='visCONbut'>-</button>
+        <button id='hideENV' onclick="removeENV()" class='visCONbut' disabled>x</button>
+      </div>
+      <div id='ENVcontent' class='PANcontent'>
+      <div id='modepanel'>
+        <button id='stmbutton' class='ENVmodeBUT' style="background-color: green;" onclick="STMOD()">STANDARD</button>
+        <button disabled id='ambutton' class='ENVmodeBUT' onclick="ADMOD_tuto()">ADVANCED</button>
+        <br><br>
+      </div>
+      
+      <div id='Layerpan'>
+        <table id='layerlist'>
+        </table>
+     
+    
+        <div id='advancedpanel' style='display:none'>
+          Select variable:
+          <select id='advSELVAR'></select>
+        <div id='advBUF' style='display:none'><br>
+          Select buffer size:
+          <select id='advSELbuf'></select>
+          <br><br><br>
+        </div>
+        <div id='advTIME' style='display:none'><br>
+          <input type='checkbox' id='allyearsCB' checked=true>Use all years <br>
+          Select starting year:
+          <select id='advSELsy' disabled></select> <br>
+          Select end year:
+          <select id='advSELey' disabled></select> <br><br>
+          <input type='checkbox' id='allmonthsCB' checked=true>Use all months <br>
+          Select months of interest:
+          <table style="overflow-x: auto;">
+            <tr><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th></tr>
+            <tr>
+              <td><input type='checkbox' id='months01' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months02' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months03' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months04' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months05' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months06' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months07' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months08' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months09' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months10' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months11' class='cbmonths' disabled checked=true></td>
+              <td><input type='checkbox' id='months12' class='cbmonths' disabled checked=true></td>
+            </tr>
+              
+               </table>
+          <br> Select function:
+          <select id='advSELfun'>
+            <option>Mean</option>
+            <option>Standard deviation</option>
+            <option>Median</option>    
+            <option>Maximum</option>
+            <option>Minimum</option>
+          </select> <br><br><br>
+        </div>
+        <div id='advCS'>
+          <input type='checkbox' id='customizeCSLcb'>Customize colorscale limits:<br>
+          Min:<input type="number" id='minCS' style="width: 20%;" disabled></input> Max:<input type="number" id='maxCS' style="width: 20%;" disabled></input><br>
+          <br><br>
+          <input type='checkbox' id='customizeCSCcb'>Customize colorscale:<br>
+          <input type="color" id='lowCOL' style="width: 1cm;" disabled> Low values<br>
+          <input type="color" id='midCOL' style="width: 1cm;" disabled> Mid values<br>
+          <input type="color" id='highCOL' style="width: 1cm;" disabled> High values<br>
+        </div> <br><br><br>
+        <div style="text-align: center; background-color: inherit;"><button id='runADVbut' onclick="advancedPOST_tuto()">RUN</button></div>
+        </div>
+        <br><br>
+       </div>
+      </div>
+    </div>
+  
+    <div id='SCpan'>
+      <h5>SEA CURRENTS</h5>
+      <div class='visCON' id='visCONsc'>
+        <button id='miniSC' onclick="hideUnhideSC()" class='visCONbut'>-</button>
+        <button id='hideSC' onclick="removeSC()"class='visCONbut' disabled>x</button>
+      </div>
+      <div id='SCcontent' class='PANcontent'>
+        Use all months <input type='checkbox' id='custSCcb' checked=true onchange="cbSC()"><br>
+        <div id='SCmonthsDIV' style='display:none;'>Select month of interest:
+          <select id='SCmonthsSEL' disabled>
+            <option id='sc01'>January</option>
+            <option id='sc02'>February</option>
+            <option id='sc03'>March</option>
+            <option id='sc04'>April</option>
+            <option id='sc05'>May</option>
+            <option id='sc06'>June</option>
+            <option id='sc07'>July</option>
+            <option id='sc08'>August</option>
+            <option id='sc09'>September</option>
+            <option id='sc10'>October</option>
+            <option id='sc11'>November</option>
+            <option id='sc12'>December</option>
+          </select>
+        </div>
+          <button onclick='postSC_tuto()' id='displaySCb'>Display sea currents</button><br>
+      </div>
+      </div>
+    
+    <div id='bgpan'>
+        <h5>DISPLAY SETTINGS</h5>
+        <div class='visCON' id='visCONbg'>
+          <button id='miniBG' onclick="hideUnhideBG()" class='visCONbut'>-</button>
+          <button id='hideBG' onclick="removeBG()"class='visCONbut'>x</button>
+        </div>
+        <div id='BGcontent' class='PANcontent'>
+          <h6>Background map</h6>
+          <table>
+            <tr>
+              <td style="width: 40%;">Select type</td>
+              <td style="width: 40%;"> <select id='bgid' onchange='makebg()'>
+                <option value='osm'>Open Street Map</option>
+                <option value='shp'>Land</option>
+                <option value='ree'>Land and reefs</option>
+              </select></td>
+            </tr>
+            <tr>
+              <td style="width: 40%;">Greyscale</td>
+              <td style="width: 40%;"><input id='bggsid' type='checkbox' onchange='makebg()'></td>
+            </tr>
+
+          </table>
+      
+               <div id='transppan' style="display: none;">
+                <br>
+ 
+            <h6>Reef environment</h6>
+            <table>
+            <tr>
+            <td style="width: 40%;">Set opacity</td>
+            <td style="width: 40%;"><input id='reefTRA' type='number' step='1' style="width: 50%;" value=100 onchange="SetReefTransparency()">%</td>
+           </tr>
+           <tr>
+            <td>Show legend</td>
+            <td> <input id='cblegend' type='checkbox' onchange="hidelegend()">  </td>
+          </tr>
+        </table>
+          </div>
+ 
+        <div id='sctrans' style='display: none;'>
+          <br>
+          <h6>Sea currents</h6>
+          <table>
+              <tr>
+                <td style="width: 40%;">Set opacity </td>
+                <td style="width: 40%;"><input id='scTRA' type='number' step='1' style="width: 50%;" value=100 onchange="SetSCTransparency()">%</td>
+              </tr>
+              <tr>
+                <td style="width: 40%;">Show legend </td>
+                <td style="width: 40%"> <input id='cblegendSC' type='checkbox' onchange="hidelegendSC()"></td>
+              </tr>
+
+          </table>
+          
+          
+           
+          </div>
+
+     
+      </div>
+    </div>
+
+    
+    <div id='exportPAN'>
+      <h5>DOWNLOAD</h5>
+      <div class='visCON' id='visCONdwn'>
+        <button id='miniDWN' onclick="hideUnhideDWN()" class='visCONbut'>-</button>
+        <button id='hideDWN' onclick="removeDWN()"class='visCONbut' disabled>x</button>
+      </div>
+      <div id='DWNcontent' class='PANcontent'>
+      
+      <button id='ePDF' class='exportBUTS' onclick='exportPDF_tuto()' disabled>Map as PDF</button>
+      <button id='eCSV' class='exportBUTS' onclick='openDWNwindow_tuto()'>Reef data as CSV table</button>
+    </div>
+    </div>
+    
+    
+
+      
+    
+  
+  
+    </div>
+  
+
+    </div>
+  
+
+  </div>
+
+
+</div>
+  
+
+  
+
+
+  
+<div id='downloadMOD' class='modal'>
+  <div class='modalcontent'>
+      <h3>Data download</h3>
+      <p>Here you can download data from RECIFS. <br> <br>
+      <div>
+      <p>Select environmental variables to be downloaded: </p>
+
+      <div style="float:left; width:40%">
+        <h5>Standard variables </h5>
+        <select multiple id='DlyrLIST' size=10">
+        </select>
+        </div>
+        <div style="float:left; width:20%">
+          <br><br>
+          <button onclick='addSTANDARDdwnL()' class='dwn_listB'><img src='public/buttons/buttonDA.svg' style="width: 100%;"></button><br><br>
+          <button onclick='rmvFROMdwnL()' class='dwn_listB'><img src='public/buttons/buttonDR.svg' style="width: 100%;"></button>
+        </div>
+        <div style="float:left; width:40%">
+        <h5>Download list</h5>
+        <select multiple id='dwnLIST' size=10">
+        </select>
+      </div>
+    </div>
+      <br> <br>
+      Download only closest reefs to points of interest <input type='checkbox' id='cbPOI'></input>
+      <br> <br>
+      <button onclick="launchDWN_tuto()">Download data</button>      
+      <br> <br>
+      <button onclick="document.getElementById('downloadMOD').style.display='none'">Close</button>
+  </div>
+</div>
+
+
+<div id='uploadMOD' class='modal' style="display: none;">
+  <div class='modalcontent'>
+    <h5>Upload point of interests from file</h5>
+    <br>
+    <div style='text-align: left;'>
+    <p>Use the button here below to upload a table with the coordinates of the points of interest to be shown on the map.</p>
+    <p>Please note that the input file must comply with the following requirements:</p>
+    <ul style='list-style-position: inside;'>
+      <li>Table in .csv (comma-separated-variables) form</li>
+      <li>First row is the header</li>
+      <li>One column named "ID" contains the site identier</li>
+      <li>One column named "LON" contains the site longitude (in decimal degrees, WGS84 format)</li>
+      <li>One column named "LAT" contains the site latitude (in decimal degrees, WGS84 format)</li>
+    </ul>
+    </div>
+    <br>
+    <input type="file" id="myFile">
+    <button onclick='uploadPOIs()'>Send</button>
+    <button onclick='document.getElementById("uploadMOD").style.display="none"'>Cancel</button>
+  </div>
+  </div>
+
+
+<div id='infoMOD' class='modal' style="display: none;">
+  <div class='modalcontent'>
+    <h5 id='infoVARname'></h5>
+    <br>
+    <p id='infoVARtxt'></p>
+    <br>
+    <button onclick='document.getElementById("infoMOD").style.display = "none"'>Close</button>
+  </div>
+
+</div>
+
+<!-- Here below all the code for tutorial -->
+
+
+
+
+<div id='tutoMOD_1' class='modal' style="display: block;">
+  <div class='modalcontent_TUTO'>
+    <h5>Welcome to the tutorial of RECIFS</h5>
+    <br>
+    <p class='tutoTXT'>RECIFS is the acronym for "Reef Environment Centralized InFormation System". <br>
+      <br>
+      RECIFS is an online application allowing the user to explore environmental variation across any reef system around the world. 
+      The environmental data shown in RECIFS comes from several public databases, and can be visualized and dowloaded in complete open access. 
+      <br><br>
+      In this tutorial, you will learn how to use the different functionalities of RECIFS. 
+      <br><br>
+      Follow the instructions written in the green dialog boxes. If you  need to reread the instructions or move to the next step of the tutorial, click on the tutorial button (<img style="width: 0.8cm; background-color: #3c680a;" src="public/buttons/buttonT.svg">) in the bottom-right corner of the interface.
+    </p>
+    <br>
+    <button onclick='transitionTUTO1()'>Let's start!</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_2' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>1. Select study area</h5>
+    <br>
+    <p class='tutoTXT'>The first step when using RECIFS is selecting an area of interest. <br>
+      <br>
+      Any region of the world having coral reefs can be selected as study area.  
+      <br><br>
+      There are no particular restriction in size, but bear in mind that if you select very large areas the computations of RECIFS will be slower. 
+      <br><br>
+      In this tutorial, you will work on the reefs of the Red Sea. Move through the map to the Red Sea (highlighted by a green polygon). 
+      Then click on the "Area of Interest" button in the top panel, and draw the Area of Interest around the Red Sea.
+    </p>
+    <br>
+    <button onclick='transitionTUTO2()'>OK</button>
+  </div>
+</div>
+
+
+
+<div id='tutoMOD_3' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>2. Visualize environmental variation</h5>
+    <br>
+    <p class='tutoTXT'>You will see that the reefs of the Red Sea are now shown on the map. <br>
+      <br>
+      By default, RECIFS displays the average level of Sea Surface Temperature over the past decades.   
+      <br><br>
+      You can visualize other environmental variables by clicking on the "Environment" button. 
+      This will open a panel with a set of environmental variables that are pre-computed by RECIFS. 
+    </p>
+    <br>
+    <button onclick='transitionTUTO3()'>OK</button>
+  </div>
+</div>
+
+
+
+<div id='tutoMOD_4' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>2. Visualize environmental variation</h5>
+    <br>
+    <p class='tutoTXT'>
+      For some variables, you can either display the overall average (<button style="background-color: #0f497e;">MEA</button>) or the overall standard deviation (<button style="background-color: #0f497e;">STD</button>). 
+      For other variables, you can visualize the values computed on a radius or 10 (<button style="background-color: #0f497e;">10k</button>) or 50 (<button style="background-color: #0f497e;">50k</button>) km. 
+      <br><br>
+      If you want to find out more precisely how each variable was computed, and what are the original data sources, click on the <button class='ENVinfoB'>i</button> button next to the variable of interest. 
+      <br><br>
+      Try to visualize different types of variables, and use the information button to display the data sources. 
+      When you are done, click on the on the tutorial button (<img style="width: 0.8cm; background-color: #3c680a;" src="public/buttons/buttonT.svg">) to continue. 
+    </p>
+    <br>
+    <button onclick='transitionTUTO4()'>OK</button>
+  </div>
+</div>
+
+
+
+<div id='tutoMOD_5' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>3. Advanced environmetal characterization </h5>
+    <br>
+    <p class='tutoTXT'>
+      In RECIFS it is possible to customize the computation of environmental variables using the "advanced mode".  
+      <br><br>
+      For example, in the "advanced mode" you can compute environmental characterization for a specific time window, or using a specific statistcal measure (e.g. mean, standard deviation, median, minimal, maximal).
+      <br><br>
+      To activate the "advanced mode", click on the <button style="background-color: #0f497e;">ADVANCED</button> button, in the environmental panel. 
+       </p>
+    <br>
+    <button onclick='transitionTUTO5()'>OK</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_6' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>3. Advanced environmnetal characterization </h5>
+    <br>
+    <p class='tutoTXT'>
+      You can use this interface to customize the environmnetal characterization. 
+      <br><br>
+      For variables having multiple measures over time (e.g. Sea surface temperature), you can restrict the computations to specific temporal windows. 
+      For example, you can compute the characterization of a given variable across a specifc range of years, and/or only for specific months. 
+      You can also decide which statistic to compute (e.g. mean, standard deviation, median, minimal, maximal).
+      <br><br>
+      For variables without measures over time (e.g. landcover-derived variables such as density of build-up area), you can decide the size of the radius over which the variable is calculated. 
+      <br><br>
+      The interface also allows you to customize the limits and the colors used in the colorscale displayed on the map. 
+      <br><br>
+      In this tutorial, we will focus on <b>standard deviation</b> of <b>sea surface temperature</b> over the decade between <b>2010 and 2020</b>. <br>
+      Use the inferface to adjust the settings, then click on the <button style="background-color: #0f497e;">RUN</button> button to perform the computations in "advanced mode"-
+      <br><br>
+      When you are done, click on the on the tutorial button (<img style="width: 0.8cm; background-color: #3c680a;" src="public/buttons/buttonT.svg">) to continue. 
+    </p>
+    <br>
+    <button onclick='transitionTUTO6()'>OK</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_7' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>4. Add points of interest </h5>
+    <br>
+    <p class='tutoTXT'>
+      RECIFS allows you to add specific points of interest to the map, so that you can estimate the environmental characteristics for these locations. <br><br>
+      To add points of interest to the map, click on the Points of Interest button in the upper panel of the interface. 
+    </p>
+    <br>
+    <button onclick='transitionTUTO7()'>OK</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_8' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>4. Add points of interest </h5>
+    <br>
+    <p class='tutoTXT'>
+      Note that four points of interest (shown in purple) have already been added to the map, highlighting the position of cities of the Red Sea. 
+      <br><br>
+      There are two ways of adding new points of interest: (1) via the interactive map or (2) from a .csv file containing the coordinates of the points of interest.
+      <br><br>
+      In this tutorial, you will use the interactive map method. 
+      <br><br>
+      Click on the <button style="background-color: #0f497e;">Add on map</button> button, then click on the map at the position where you want to add a point of interest. 
+    </p>
+    <br>
+    <button onclick='transitionTUTO8()'>OK</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_9' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>5. Export in tabular format </h5>
+    <br>
+    <p class='tutoTXT'>
+      RECIFS allows you to export environmental data under a tabular format. 
+      <br><br>
+      By default, all the "pre-computed variables" are available for download. 
+      <br><br>
+      If you want to download a custom variable created in the "advanced mode", you have to add it to the download list using the specific button (<img id='addDownF' style="width: 1cm; background-color: #0f497e;" src="public/buttons/buttonADD.svg" >), located in the top-left corner of the map.
+      <br><br>
+      Click on this button to add the variable shown on the map to the dowload list.    
+    </p>
+    <br>
+    <button onclick='transitionTUTO9()'>OK</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_10' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>5. Export in tabular format </h5>
+    <br>
+    <p class='tutoTXT'>
+      To download environmental data, open the download panel by clicking on the "Download" button in the top of the interface.
+      <br><br>
+      Next, click on the <button style="background-color: #0f497e;">Reef data as CSV table</button> button to open the download window. 
+     
+    </p>
+    <br>
+    <button onclick='transitionTUTO10()'>OK</button>
+  </div>
+</div>
+
+<div id='tutoMOD_11' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>5. Export in tabular format </h5>
+    <br>
+    <p class='tutoTXT'>
+      The download window allows you to define which variables to download for which reefs.
+      <br><br>
+      Use the list on the left to select the variables you want to download, then click on the <button style="width: 1cm; background-color: #0f497e;"><img src='public/buttons/buttonDA.svg' style="width: 100%;"></button> button to add them to the download list.
+      <br><br>
+      You will notice that the download list alread contains the custom variable that you created in the advanced mode. 
+      <br><br>
+      If you want to remove a variable from the download list, use the <button style="width: 1cm; background-color: #0f497e;"><img src='public/buttons/buttonDR.svg' style="width: 100%;"></button> button. 
+      <br><br>
+      By checking the box located just below the lists, you can decide whether to download the environmental variables only for the reefs that are located the closest to the Points of Interest.
+      <br><br> 
+      If you don't check this box, the environmnetal variables will be downloaded for all the reefs in the Area of Interest (i.e. all the reefs of the Red Sea).
+      <br><br>
+      To run the download, click on the <button style="background-color: #0f497e;">Download data</button> button. 
+      <br><br>
+      Select the variables you want to download, then download these variable only for the closest reefs to the Points of Interest. 
+    <br><br>
+    <button onclick='transitionTUTO11()'>OK</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_12' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>6. Add sea currents to map </h5>
+    <br>
+    <p class='tutoTXT'>
+      In RECIFS, you can also add an additional layer of information displaying sea surface currents for the Area of Interest.
+      <br><br>
+      To add sea currents to the map, click on the "Sea current" button in the upper panel of the interface. This will open the sea current panel. 
+      <br><br>
+      You can compute sea currents overall averages, or for specific months of the year. 
+      <br><br>
+      To add sea currents to the map, click on the <button style="background-color: #0f497e;">Display sea currents</button> button. 
+      <br><br>
+      Note that depending on the zoom level, the map will display sea currents at different resoltion. If you want to observe fine scale sea current patterns, zoom closer on the region of interest. 
+      <br><br>
+      Try to visualize sea currents for different months, then click on the on the tutorial button (<img style="width: 0.8cm; background-color: #3c680a;" src="public/buttons/buttonT.svg">) to continue. 
+    </p>
+    <br>
+    <button onclick='transitionTUTO12()'>OK</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_13' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>7. Modify display settings </h5>
+    <br>
+    <p class='tutoTXT'>
+      The display settings of the map can be modified through the dedicated interface. 
+      <br><br>
+      You can open this interface by clicking on the "Display settings" button in the upper panel.
+      <br><br>
+      You can use this interface to modify the background map, the opacity of reefs and sea currents, and to hide or unhide legends.
+      <br><br>
+      Try to modify the display settings, then click on the on the tutorial button (<img style="width: 0.8cm; background-color: #3c680a;" src="public/buttons/buttonT.svg">) to continue. 
+    </p>
+    <br>
+    <button onclick='transitionTUTO13()'>OK</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_14' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>8. Download as PDF </h5>
+    <br>
+    <p class='tutoTXT'>
+      The map displayed by the RECIFS interface can be downloaded as PDF. 
+      <br><br>
+      To download the map as PDF, click on the "Download" button in the upper panel, then on the <button style='background-color: #0f497e;'>Map as PDF</button> button. 
+    </p>
+    <br>
+    <button onclick='transitionTUTO14()'>OK</button>
+  </div>
+</div>
+
+
+<div id='tutoMOD_15' class='modal' style="display: none;">
+  <div class='modalcontent_TUTO'>
+    <h5>Congratulations!</h5>
+    <br>
+    <p class='tutoTXT'>
+    You completed the tutorial and you are now capable of using all the functionalities of RECIFS!
+    <br><br>
+    <a href="/">Click here</a> to be redirected to the complete version of RECIFS and start explore the reef environment worldwide.
+    </p>
+    <br>
+  </div>
+</div>
+
+<script src='public/tutorial.js'></script>
+</body>
+</html>
