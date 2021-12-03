@@ -204,33 +204,33 @@
                <div id='transppan' style="display: none;">
                 <br>
  
-            <h6>Reef environment</h6>
-            <table>
-            <tr>
-            <td style="width: 40%;">Set opacity</td>
-            <td style="width: 40%;"><input id='reefTRA' type='number' step='1' style="width: 50%;" value=100 onchange="SetReefTransparency()">%</td>
-           </tr>
-           <tr>
-            <td>Show legend</td>
-            <td> <input id='cblegend' type='checkbox' onchange="hidelegend()">  </td>
-          </tr>
-        </table>
-          </div>
- 
-        <div id='sctrans' style='display: none;'>
-          <br>
-          <h6>Sea currents</h6>
-          <table>
-              <tr>
-                <td style="width: 40%;">Set opacity </td>
-                <td style="width: 40%;"><input id='scTRA' type='number' step='1' style="width: 50%;" value=100 onchange="SetSCTransparency()">%</td>
+                <h6>Reef environment</h6>
+                <table>
+                <tr>
+                <td style="width: 40%;">Set opacity</td>
+                <td style="width: 40%;">0%<input id='reefTRA' type='range' min='0' max='100' value='100' style="width: 50%;" onchange="SetReefTransparency()">100%</td>
+               </tr>
+               <tr>
+                <td>Show legend</td>
+                <td> <input id='cblegend' type='checkbox' onchange="hidelegend()">  </td>
               </tr>
-              <tr>
-                <td style="width: 40%;">Show legend </td>
-                <td style="width: 40%"> <input id='cblegendSC' type='checkbox' onchange="hidelegendSC()"></td>
-              </tr>
-
-          </table>
+            </table>
+              </div>
+     
+            <div id='sctrans' style='display: none;'>
+              <br>
+              <h6>Sea currents</h6>
+              <table>
+                  <tr>
+                    <td style="width: 40%;">Set opacity </td>
+                    <td style="width: 40%;">0%<input id='scTRA' type='range' min='0' max='100' value='100' style="width: 50%;" onchange="SetSCTransparency()">100%</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 40%;">Show legend </td>
+                    <td style="width: 40%"> <input id='cblegendSC' type='checkbox' onchange="hidelegendSC()"></td>
+                  </tr>
+    
+              </table>
           
           
            
