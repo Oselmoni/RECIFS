@@ -60,7 +60,7 @@ tbody {background-color: inherit;}
 
 
   #upperpan {
-    height: 20vh;
+    height: 15vh;
     min-height: 3cm;
     max-height: 5cm;
     background-color: #b7c2d3;
@@ -76,20 +76,13 @@ tbody {background-color: inherit;}
     min-width: 3cm;
     float:left;
     padding: 0.1cm;
+    text-align: center;
     }
 
-  #mainT {
-    font-size: 2.7cm; 
-    letter-spacing: 0.3cm;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  #subT {
-    font-size: 0.4cm; 
-    text-align: center;
-  }
+  #logo {
+    width: 100%;
+    height: 100%;
+    }
 
   #buttonsPAN {
     text-align: center;
@@ -140,7 +133,7 @@ tbody {background-color: inherit;}
     right: 0; 
     margin-left: auto; 
     width: 10cm; 
-    max-height: 80vh;
+    max-height: 85vh;
   }
 
   .PANcontent {
@@ -351,7 +344,7 @@ tbody {background-color: inherit;}
 
 #map {
     width : 100%;
-    height : 80vh;
+    height : 85vh;
     position: relative;
 }
   
@@ -502,33 +495,6 @@ tbody {background-color: inherit;}
     z-index: 10;
   }
 
-
-
-  #titlepan_TUTO {
-    color: #77a552;
-    position: relative;
-    text-align: left;
-    height: 100%;
-    width: 20%;
-    min-width: 3cm;
-    float:left;
-    padding: 0.1cm;
-
-    }
-
-  #mainT_TUTO {
-    font-size: 2.7cm; 
-    letter-spacing: 0.3cm;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  #subT_TUTO {
-    text-align: center;
-    font-size: 0.5cm; 
-    letter-spacing: 0.3cm;
-  }
 
   .tutoTXT {
     color: white;
