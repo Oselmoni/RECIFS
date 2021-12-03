@@ -8,27 +8,6 @@ var bgcol = '#a3b3e6' // background color
 var secol = '#0f497e' // secondary color
 var accol = 'green' // activation color
 
-// function to convert colored pixels to greyscale (raster)
-
-function greyscaleSAT(context) {var canvas = context.canvas;
-var width = canvas.width;
-var height = canvas.height;var imageData = context.getImageData(0, 0, width, height);
-var data = imageData.data;for(i=0; i<data.length; i += 4){
- var r = data[i];
- var g = data[i + 1];
- var b = data[i + 2];
- // CIE luminance for the RGB
- var v = 0.3 * r + 0.1 * g + 1* b;
- // Show white color instead of black color while loading new tiles:
- if(v === 0.0)
-  v=255.0;  
- data[i+0] = v; // Red
- data[i+1] = v; // Green
- data[i+2] = v; // Blue
- data[i+3] = 255; // Alpha
-}context.putImageData(imageData,0,0);
-
-}
 
 // function to convert colored pixels to greyscale (osm)
 
@@ -105,36 +84,49 @@ var POIvector = new ol.layer.Vector({
 
 makebg = function() {
 
-if (document.getElementById('bgid').value == 'osm') {
-  bgmap.setVisible(true)
-  LandLayer.setVisible(false)
-  BGReefsLayer.setVisible(false)
-  bgmap.setSource(OSMsource)
-  if (document.getElementById('bggsid').checked) {
-    bgmap.on('postcompose', function(event) {greyscaleOSM(event.context)})
-} else { 
-  bgmap.removeEventListener("postcompose", function(event) {greyscaleOSM(event.context)});
- }
-
-} else if (document.getElementById('bgid').value == 'shp')  {
-  bgmap.setVisible(false)
-  LandLayer.setVisible(true)
-  BGReefsLayer.setVisible(false)
-  if (document.getElementById('bggsid').checked) {
+  if (document.getElementById('bgid').value == 'osm') {
+    bgmap.setVisible(true)
+    LandLayer.setVisible(false)
+    BGReefsLayer.setVisible(false)
+    if (document.getElementById('bggsid').checked) {
+      bgmap.on('postcompose', function(event) {greyscaleOSM(event.context)})
+      // reattribute source to postcompose map
+      bgmap.setSource(new ol.source.OSM({
+        attributionsCollapsible : false,
+        attributions: '© '+'<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | <a href="https://data.unep-wcmc.org/datasets/1" target="_blank">UNDP-WCMC</a>'
+      })
+      )
+  } else { 
     bgmap.removeEventListener("postcompose", function(event) {greyscaleOSM(event.context)});
+    
+       // reattribute source to postcompose map
+       bgmap.setSource(new ol.source.OSM({
+        attributionsCollapsible : false,
+        attributions: '© '+'<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors | <a href="https://data.unep-wcmc.org/datasets/1" target="_blank">UNDP-WCMC</a>'
+      }))
+  
+   }
+  
+  } else if (document.getElementById('bgid').value == 'shp')  {
+    bgmap.setVisible(false)
+    LandLayer.setVisible(true)
+    BGReefsLayer.setVisible(false)
+    if (document.getElementById('bggsid').checked) {
+      bgmap.removeEventListener("postcompose", function(event) {greyscaleOSM(event.context)});
+    } 
+  } else if (document.getElementById('bgid').value == 'ree')  {
+    bgmap.setVisible(false)
+    LandLayer.setVisible(true)
+    BGReefsLayer.setVisible(true)
+    if (document.getElementById('bggsid').checked) {
+      bgmap.removeEventListener("postcompose", function(event) {greyscaleOSM(event.context)});
+    } 
   } 
-} else if (document.getElementById('bgid').value == 'ree')  {
-  bgmap.setVisible(false)
-  LandLayer.setVisible(true)
-  BGReefsLayer.setVisible(true)
-  if (document.getElementById('bggsid').checked) {
-    bgmap.removeEventListener("postcompose", function(event) {greyscaleOSM(event.context)});
-  } 
-} 
-
-
-
-}
+  
+  
+  
+  }
+  
 
 
 // source of reef vector
