@@ -59,7 +59,7 @@ if (input[[1]]$ADVreq$typeVAR=='buffer') {
   
   buff = input[[1]]$ADVreq$buffer # find buffer size
   
-  OUTVAR = s_allDB[,paste0(ENVVAR,'_',buff)]
+  OUTVAR = s_allDB[rownames(reefs_AOI),paste0(ENVVAR,'_',buff)]
   
   outvarid = paste0(ENVVAR,'_',buff)
   
