@@ -1,0 +1,6 @@
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /cert/recifs_cert.crt
+        keyFile: /cert/recifs_cert.key
