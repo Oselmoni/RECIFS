@@ -446,6 +446,18 @@ tbody {background-color: inherit;}
     -ms-transform: translate(-50%, 0);
   }
 
+  #startup {
+    z-index: 6;
+    position: absolute; 
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgb(235, 18, 18);
+    width: 80%;
+
+  }
+
 
   #addDown {
     background-color: #0f497e;

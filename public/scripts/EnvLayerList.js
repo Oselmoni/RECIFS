@@ -8,7 +8,7 @@ var metaVAR = JSON.parse(metaVAR)
 var metaVARadv = JSON.parse(metaVARadv)
 var metaSTAT = JSON.parse(metaSTAT)
 
-var evar = 'SST_me' // environmental variable currently plotted
+var evar = '' // environmental variable currently plotted
 var dataR // data arriving from server
 var dataRadv // data arriving from server (advanced version)
 
