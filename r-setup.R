@@ -1,6 +1,8 @@
 install.packages("lattice", repos="http://stat.ethz.ch/CRAN/")
 install.packages("sp", repos="http://stat.ethz.ch/CRAN/")
 install.packages("Rcpp", repos="http://stat.ethz.ch/CRAN/")
+install.packages("terra", repos="http://stat.ethz.ch/CRAN/")
+install.packages("codetools", repos="http://stat.ethz.ch/CRAN/")
 install.packages("rgdal", repos="http://stat.ethz.ch/CRAN/")
 install.packages("raster", repos="http://stat.ethz.ch/CRAN/")
 install.packages("jsonlite", repos="http://stat.ethz.ch/CRAN/")
