@@ -9,13 +9,13 @@ addReefs = function(nevar, data) {
 
   evar=nevar
 
-
   if (evar == '') { }
   else {
 
   // find component of variable (environmental variable + statistic) for legend
   evar1 = evar.split('_')[0] // find first part of variable id: environmental variable
   evar2 = evar.split('_')[1] // find second part of variable id: statistic applied
+  evar3 = evar.split('_')[2] // find third  part of variable id: buffer applied
 
   // add reefs to map 
 
@@ -40,7 +40,7 @@ document.getElementById('legend').style.display = 'block'
 var width = document.getElementById('legendplot').clientWidth // this gives the # of pixels
 var height = document.getElementById('legendplot').clientHeight // this gives the # of pixels
 
-document.getElementById('legendtitle').innerHTML = metaVAR[evar1].varLEGEND+' - '+metaSTAT[evar2].statLEGEND
+document.getElementById('legendtitle').innerHTML = metaVAR[evar1].varLEGEND+' - '+metaSTAT[evar2].statLEGEND+' - '+metaSTAT[evar3].statLEGEND
 makelegend(data.meta.colscale, data.meta.colscaleBRKS[evar], width, height, 18,4,10   )
 }
 

@@ -5,7 +5,6 @@
 // load variables metdata
 
 var metaVAR = JSON.parse(metaVAR)
-var metaVARadv = JSON.parse(metaVARadv)
 var metaSTAT = JSON.parse(metaSTAT)
 
 var evar = '' // environmental variable currently plotted
@@ -36,7 +35,8 @@ addLayersList = function(evar) {
     
     // create a button for every statistic
     stats.forEach(function(stat) {
-        const statid = stat.split('_')[1] // id of the stat
+        var statid = stat.split('_')[1] // id of the stat
+        if (statid=='X') {var statid = stat.split('_')[2]} // if a fixed variable --> use buffer size as stat id
         var statele = document.createElement('td')
         const statbut = document.createElement('button')
         statbut.innerText = metaSTAT[statid].statNAMELL

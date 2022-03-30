@@ -28,7 +28,7 @@ STMOD = function() {
       firstAdv = false
   
       document.getElementById('advSELVAR').selectedIndex=0
-      tempVSbuff()
+      tempVSfix()
   
   
     }
@@ -43,7 +43,7 @@ STMOD = function() {
   var selvar = document.getElementById('advSELVAR')
   
   // add options to select variable based metadata
-  Object.keys(metaVARadv).forEach(function(item) {
+  Object.keys(metaVAR).forEach(function(item) {
     nop = document.createElement('option')
     nop.innerText = metaVAR[item].varNAMELL
     nop.id = item
@@ -51,34 +51,34 @@ STMOD = function() {
   })
   
   selvar.onchange = function() {
-    tempVSbuff()
+    tempVSfix()
   }
   
-  // function to show menu for temporal vs buffer mode
+  // function to show menu for temporal vs fixed mode
   
-  tempVSbuff = function() {
+  tempVSfix = function() {
+
     // identify selected option
     var selopt = document.getElementById('advSELVAR').selectedOptions[0].id
-  
-    if (metaVARadv[selopt].typeVAR=='buffer') {
-      // activate buffer menu, de-activate temporal menu
-      document.getElementById('advBUF').style.display = 'block'
-      document.getElementById('advTIME').style.display = 'none'
-      // add buffer options 
-  
-      var advSELbuf = document.getElementById('advSELbuf')
-      advSELbuf.innerHTML=''
-      metaVARadv[selopt].allvars.forEach(function(item) {
+
+    // add buffer options 
+    var advSELbuf = document.getElementById('advSELbuf')
+    advSELbuf.innerHTML=''
+    metaVAR[selopt].varBuf.split(',').forEach(function(item) {
         nop = document.createElement('option')
-        nop.innerText = item.slice(1,8)
+        nop.innerText = metaSTAT[item].statLEGEND
         nop.id = item
         advSELbuf.appendChild(nop)
       })
+
+    if (metaVAR[selopt].varTime=='-') {  // if variable without temporal resolution...
+      // de-activate temporal menu
+      document.getElementById('advTIME').style.display = 'none'
   
-    } else {
-       // activate temporal menu, de-activate buffer menu
+    } else { // if variable with temporal resolution...
+
+      // activate temporal menu
       document.getElementById('advTIME').style.display = 'block'
-      document.getElementById('advBUF').style.display = 'none'
   
       // find years available for variable of interest from metadata
       var sy = Number(metaVAR[selopt].varTime.slice(0,4)) // start year
@@ -222,11 +222,11 @@ STMOD = function() {
     
     // fill request object with form values
     advreqO.envvar = document.getElementById('advSELVAR').selectedOptions[0].id
-    advreqO.typeVAR = metaVARadv[advreqO.envvar].typeVAR
-  
-    if (advreqO.typeVAR=='buffer') {
-      advreqO.buffer = document.getElementById('advSELbuf').selectedOptions[0].id
-    } else {
+    advreqO.typeVAR = metaVAR[advreqO.envvar].varTime
+    advreqO.buffer = document.getElementById('advSELbuf').selectedOptions[0].id
+
+    if (advreqO.typeVAR!='-') {    // if variable with temporal resolution: add data on time
+
       advreqO.time.years.cb = document.getElementById('allyearsCB').checked
       advreqO.time.years.ys = document.getElementById('advSELsy').selectedOptions[0].id
       advreqO.time.years.ye = document.getElementById('advSELey').selectedOptions[0].id

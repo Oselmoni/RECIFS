@@ -1,8 +1,8 @@
 #### Load Distance Matrix
 library(sp) # library for finding points in polygon
 source('public/R-scripts/roundDecimal.R')
-# load('webApp/input.rda')
-# load('webApp/public/DB/allDB_summary.rda')
+# load('input.rda')
+# load('public/DB/allDB_summary.rda')
 # load('webApp/public/DB/allDB_coords.rda')
 # source('webApp/public/R-scripts/roundDecimal.R')
 
@@ -148,3 +148,5 @@ jsonout = paste0('{ "Error" : "none" , "ROutput" : {
 
 return(jsonout)
 }
+
+

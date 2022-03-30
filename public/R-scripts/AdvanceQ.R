@@ -1,9 +1,9 @@
 #### Load Distance Matrix
 library(sp) # library for finding points in polygon
 source('public/R-scripts/roundDecimal.R')
-# load('webApp/input.rda')
-# load('webApp/public/DB/allDB_coords.rda')
-# source('webApp/public/R-scripts/roundDecimal.R')
+# load('input.rda')
+# load('public/DB/allDB_coords.rda')
+# source('public/R-scripts/roundDecimal.R')
 
 #save(input, file='input.rda')
 
@@ -13,10 +13,12 @@ load('public/DB/allDB_coords.rda')
 # find variable of interest
 ENVVAR = input[[1]]$ADVreq$envvar
 
-# load(paste0('webApp/public/DB/DBadvanced/s_allDB_',ENVVAR,'.rda'))
+# find buffer of interest
+BUFVAR = input[[1]]$ADVreq$buffer
+
 
 # load all data for variable of interest
-load(paste0('public/DB/DBadvanced/s_allDB_',ENVVAR,'.rda'))
+load(paste0('public/DB/DBadvanced/s_allDB_',ENVVAR,'_',BUFVAR,'.rda'))
 
 ### find reefs in AOI
 AOI=input[[1]]$ADVreq$AOI # load AOI arriving from client
@@ -54,14 +56,12 @@ if (nrow(reefs_AOI)==0) {return('{"Error": "No reefs available for this area"}')
   } else if (nrow(reefs_AOI)<5) {return('{"Error": "Reef area is too small, try to select a larger area"}')
   } else if (nrow(reefs_AOI)>=5) {
 
-### different behaviour if variable is temporal or buffer:
-if (input[[1]]$ADVreq$typeVAR=='buffer') {
+### different behaviour if variable is temporal or fixed:
+if (input[[1]]$ADVreq$typeVAR=='-') { # if fixed...
   
-  buff = input[[1]]$ADVreq$buffer # find buffer size
+  OUTVAR = s_allDB[rownames(reefs_AOI),]
   
-  OUTVAR = s_allDB[rownames(reefs_AOI),paste0(ENVVAR,'_',buff)]
-  
-  outvarid = paste0(ENVVAR,'_',buff)
+  outvarid = paste0(ENVVAR,'_X_',BUFVAR) # 'X' indicates fixed variable 
   
 } else { # if temporal
   
@@ -116,22 +116,21 @@ if (input[[1]]$ADVreq$typeVAR=='buffer') {
     
     if (input[[1]]$ADVreq$fun=='Mean') {
       OUTVAR = apply(OUTVARM, 1, mean, na.rm=T)
-      outvarid = paste0(ENVVAR,'_me')}
+      outvarid = paste0(ENVVAR,'_me_',BUFVAR)}
     if (input[[1]]$ADVreq$fun=='Standard deviation') {OUTVAR = apply(OUTVARM, 1, sd, na.rm=T)
-      outvarid = paste0(ENVVAR,'_sd')}
+      outvarid = paste0(ENVVAR,'_sd_',BUFVAR)}
     if (input[[1]]$ADVreq$fun=='Minimum') {OUTVAR = apply(OUTVARM, 1, min, na.rm=T)   
-      outvarid = paste0(ENVVAR,'_mi')}
+      outvarid = paste0(ENVVAR,'_mi_',BUFVAR)}
     if (input[[1]]$ADVreq$fun=='Maximum') {OUTVAR = apply(OUTVARM, 1, max, na.rm=T)
-      outvarid = paste0(ENVVAR,'_ma')}
+      outvarid = paste0(ENVVAR,'_ma_',BUFVAR)}
     if (input[[1]]$ADVreq$fun=='Median') {OUTVAR = apply(OUTVARM, 1, median, na.rm=T)
-      outvarid = paste0(ENVVAR,'_md')}
+      outvarid = paste0(ENVVAR,'_md_',BUFVAR)}
   }
 }
 
 ### round values of variables to reduce size of object to be transferred to client 
 OUTVAR[is.finite(OUTVAR)==F] = NA
 r_OUTVAR=roundVar(OUTVAR)
-
 
 ### create colorscale for every variable
 nbrks = 10 # establish number of color breaks
