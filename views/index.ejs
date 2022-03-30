@@ -17,7 +17,6 @@
 </head>
 <body style="font-family:Verdana;color:rgb(8, 8, 1)">
 
-
 <div id='upperpan'> 
 
     <div id='titlepan'>
@@ -39,8 +38,7 @@
 
   <div style="background-color: white;">
   <div id='map'>
-
-    <div id='legend'>
+      <div id='legend'>
         <div id='legendtitle'>Title of Legend</div>
         <div id='legendplot'></div>
     </div>
@@ -50,10 +48,8 @@
       <div id='legendplotSC'></div>
     </div>
   
-    <p id="startup">To begin, click on the "AREA OF INTEREST" button, then draw an area surrounding your reefs of interest.
-       Next, click on the "ENVIRONMENT" or the "SEA CURRENTS" buttons to add layers to the map.
-       Full tutorial available <a href="/tutorial" style="color: rgb(94, 151, 7);">here</a>
-      </p>
+    <div id="startup">
+    </div>
 
     <button title='Click here to add the variable shown on the map to the download list' id='addDown' onclick='addCUSTOMdwnL()'><img id='addDownF' src="public/buttons/buttonADD.svg"></button>
   
@@ -153,7 +149,7 @@
     </div>
   
     <div id='SCpan'>
-      <h5>SEA CURRENTS</h5>
+      <h5>SEA CURRENTS <button class='ENVinfoB' onclick="promptInfoSC()">i</button></h5>
       <div class='visCON' id='visCONsc'>
         <button id='miniSC' onclick="hideUnhideSC()" class='visCONbut'>-</button>
         <button id='hideSC' onclick="removeSC()"class='visCONbut'>x</button>
@@ -417,6 +413,7 @@
   <script src='public/scripts/ExportPDF.js'></script>
   <script src='public/scripts/ExportCSV.js'></script>
   <script src='public/scripts/Navigation.js'></script>
+  <script src='public/scripts/StartUpHints.js'></script>
 
 </body>
 </html>

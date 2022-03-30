@@ -118,4 +118,22 @@ cbSC =  function() {
   
   }
   
+  // prompt info on sea currents
+
+  promptInfoSC = function() {
+
+    // open modal with info on variable
+    document.getElementById('infoMOD').style.display = 'block'
   
+    // set title of modal as name of the variable
+   document.getElementById('infoVARname').innerHTML = 'Surface currents direction'
+  
+   // set text content of modal  with information on variable
+   document.getElementById('infoVARtxt').innerHTML = 
+   'Sea current direction and velocity were computed using the dataset describing surface water movement from '+ metaVAR.SCV.varSource+
+   '(dataset ID: '+metaVAR.SCV.varDatasetID+').<br>'+
+   'The original dataset features spatial resolution of '+metaVAR.SCV.varRes+' and covers a temporal window spanning '+metaVAR.SCV.varTime+
+   '<br>The original dataset is available at: <a href="'+metaVAR.SCV.varLINK+'" target="_blank" style="color: yellow">'+metaVAR.SCV.varLINK+'</a>'
+ 
+  
+  }

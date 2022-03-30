@@ -8,7 +8,7 @@ var metaVAR = JSON.parse(metaVAR)
 var metaSTAT = JSON.parse(metaSTAT)
 
 var evar = '' // environmental variable currently plotted
-var dataR // data arriving from server
+var dataR = {} // data arriving from server
 var dataRadv // data arriving from server (advanced version)
 
 
@@ -81,15 +81,26 @@ promptInfo = function(envar) {
 
   // open modal with info on variable
   document.getElementById('infoMOD').style.display = 'block'
-  console.log(Evar1)
 
   // set title of modal as name of the variable
  document.getElementById('infoVARname').innerHTML = metaVAR[Evar1].varNAMELL
 
+ // if there is a temporal window, set a text showing temporal range.
+ var timeTXT  = ''
+ if (metaVAR[Evar1].varTime!='-') { timeTXT = '<br>Temporal window: '+metaVAR[Evar1].varTime}
+
+ // if there is a paper to be cited, add citation
+ var paperTXT  = ''
+ if (metaVAR[Evar1].varPAPER!='') { paperTXT = '<br>Bibliographic citation:<br>'+metaVAR[Evar1].varPAPER}
+
+
  // set text content of modal  with information on variable
  document.getElementById('infoVARtxt').innerHTML = metaVAR[Evar1].varDescription+' '+metaVAR[Evar1].varVERSIONs+
+ '<br>Spatial resolution variable:'+metaVAR[Evar1].varRes+
+  timeTXT+
  '<br>Generated using data from: '+metaVAR[Evar1].varSource+'<br>Link: <a href="'+metaVAR[Evar1].varLINK+'" target="_blank" style="color: yellow">'+metaVAR[Evar1].varLINK+'</a>'+
- '<br>Identifier original variable: '+metaVAR[Evar1].varDatasetID
+ '<br>Identifier original variable: '+metaVAR[Evar1].varDatasetID+
+  paperTXT
 
 }
 

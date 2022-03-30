@@ -41,8 +41,8 @@ AOIPolyDraw.on('drawend', function(evt) {
           if (fromServer.Error == 'none') {
             dataR=fromServer.ROutput
             addReefs(evar, dataR)
-            document.getElementById('startup').style.display='none'
-          } else {alert(fromServer.Error)}
+          runHints()
+     } else {alert(fromServer.Error)}
         }
       })
     

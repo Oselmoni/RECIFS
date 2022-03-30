@@ -30,6 +30,11 @@ hideUnhidePOI = function() {
 
 showENV = function() {
 
+  // run hints
+  runHints()
+
+  // activate buttons
+
   document.getElementById('ENVpan').style.display='block'
   document.getElementById('ENVcontent').style.display='block'
 
@@ -52,6 +57,11 @@ hideUnhideENV = function() {
 // for SC
 
 showSC = function() {
+
+  // run hints
+  runHints()
+
+  // activate buttons
 
   document.getElementById('SCpan').style.display='block'
   document.getElementById('SCcontent').style.display='block'
