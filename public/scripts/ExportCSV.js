@@ -37,11 +37,12 @@ updateLayerListDWN = function() {
   listEC.forEach(function(item) {
     var stats = metaVAR[item].varSTATS.split(',')
     stats.forEach(function(stat) {
-        const statid = stat.split('_')[1] // id of the stat
+      const statid1 = stat.split('_')[1] // id of the stat
+      const statid2= stat.split('_')[2] // id of the stat
       // create new entry
         const nentry = document.createElement('option')
         // add name of the entryy
-        nentry.innerText = metaVAR[item].varNAMELL+' '+metaSTAT[statid].statNAMELL
+        nentry.innerText = metaVAR[item].varNAMELL+' '+metaSTAT[statid1].statNAMELL+' '+metaSTAT[statid2].statNAMELL
         nentry.name = stat
         // add entry to Download layer list
         DlyrLIST.appendChild(nentry)
@@ -61,10 +62,11 @@ updateDwnList = function() {
   // add standard variables to list
   dwnLayersLIST.standard.forEach(function(i) {
     const varid = i.split('_')[0] // environmental variable id
-    const statid = i.split('_')[1] // environmental statistic id
+    const statid1 = i.split('_')[1] // environmental statistic id
+    const statid2 = i.split('_')[2] // environmental statistic id
   
     const optionDW = document.createElement('option') // create option
-    optionDW.innerText = metaVAR[varid].varNAMELL + ' ' + metaSTAT[statid].statNAMELL // add description of variable
+    optionDW.innerText = metaVAR[varid].varNAMELL + ' ' + metaSTAT[statid1].statNAMELL + ' ' + metaSTAT[statid2].statNAMELL // add description of variable
     optionDW.name = i // add name as identifiers
 
     dwnLIST.appendChild(optionDW)
@@ -131,11 +133,16 @@ addCUSTOMdwnL = function() {
 
     // create list of values, taken from variable plotted on map
     const varVAL = []
-    if (mode == 'standard') {
+
+    // retrieve id of plotted variable
+    var evar1 = evar.split('_')[0] // find variable name
+
+    // check if variable currently plotted is standard or not (custom)
+    if (metaVAR[evar1].varSTATS.split(',').includes(evar)) { // standard --> is listed in varSTATS of metaVAR
     dataR.features.forEach(function(item) {
       varVAL.push(item.properties.variables[evar])
     })
-    } else {
+    } else { // non standard --> custom
     dataRadv.features.forEach(function(item) {
         varVAL.push(item.properties.variables[evar])
     }) 

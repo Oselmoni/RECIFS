@@ -201,7 +201,7 @@ makelegendSC = function(cols, ltext, lwidth, lheight, fontsize, px, py) {
     } 
   
     if (mode=='standard') {
-      if (dataR!=undefined) {
+      if (dataR=={}) {
       // update legend
       var width = document.getElementById('legendplot').clientWidth // this gives the # of pixels
       var height = document.getElementById('legendplot').clientHeight // this gives the # of pixels
