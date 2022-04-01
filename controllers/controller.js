@@ -70,21 +70,5 @@ app.post('/AOI', urlencodedParser, function(req,res) {
     })
     
     
-    // Receive the post request for retrieving reefs from Area of Interest (tutorial )
-    
-    app.post('/AOItuto', urlencodedParser, function(req,res) {
-        var datareceived = JSON.parse(Object.keys(req.body)[0]) // client to server
-        console.log('post request received...')
-            
-        R("public/R-scripts/TutorialQ.R") //This is the R script file name  
-                
-        .data(datareceived) // the data to be sent to the R script   
-        
-        .call(function(err, d) {
-            if (err) throw err;
-            res.send(d) // send back data to client
-            console.log('...data sent back to client!')
-          });
-        })
     };
     

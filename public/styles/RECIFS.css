@@ -52,6 +52,12 @@ button:hover {
   cursor: pointer
 }
 
+button[disabled] {
+  background-color: grey;
+  border: 2px solid black;
+  transition-duration: 0.4s;
+}
+
 table {background-color: inherit;}
 th {background-color: inherit;}
 tr {background-color: inherit;}
@@ -187,7 +193,6 @@ tbody {background-color: inherit;}
     width: 80%;
     font-size: 0.5cm;
     margin: auto;
-    background-color: inherit;
     border: 2px solid #b7c2d3;
     color: white;
     transition-duration: 0.4s;
@@ -433,7 +438,7 @@ tbody {background-color: inherit;}
      text-align: center;
     margin: auto;
     padding: 10px;
-    width: 40%;
+    width: 70%;
     border: 1px solid #888;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     overflow: auto; /* Enable scroll if needed */
@@ -446,14 +451,16 @@ tbody {background-color: inherit;}
     -ms-transform: translate(-50%, 0);
   }
 
-  #startup {
+  #hints {
     z-index: 6;
     position: absolute; 
-    left: 25%;
-    color: rgb(240, 223, 72);
+    left: 30%;
+    width: 40%;
+    color: rgb(48, 190, 79);
     border-radius: 4px;
     background-color: rgb(22, 15, 53);
     padding: 5px;
+    text-align: center;
   }
 
 

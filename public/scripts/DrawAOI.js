@@ -15,7 +15,7 @@ AOIPolyDraw.on('drawend', function(evt) {
       drawing=false
       AOIsource.clear()
       map.removeInteraction(AOIPolyDraw);
-      document.getElementById('drawAOIbutton').style.backgroundColor = secol
+      document.getElementById('drawAOIbutton').style.backgroundColor = null
       
       var AOI = evt.feature // Area of Interest
       // // find geometry of AOI, convert projection and store in AOIcoord object
@@ -76,7 +76,7 @@ drawAOIpoly = function() {
       document.getElementById('drawAOIbutton').style.backgroundColor = accol
       } else {
       drawing=false
-      document.getElementById('drawAOIbutton').style.backgroundColor = secol
+      document.getElementById('drawAOIbutton').style.backgroundColor = null
       map.removeInteraction(AOIPolyDraw)
       }
       // make sure that all the interaction of POIs are turned off

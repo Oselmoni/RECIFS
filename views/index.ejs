@@ -13,7 +13,7 @@
 <script src="public/src/dom-to-image.js"></script> 
 <script type="text/javascript" src="public/DB/metaVAR.json"></script>
 <script type="text/javascript" src="public/DB/metaSTAT.json"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
 </head>
 <body style="font-family:Verdana;color:rgb(8, 8, 1)">
 
@@ -30,7 +30,7 @@
       <button title='Click here to visualize sea currents for the area of interest' disabled class='topBUT' id='topBUTsc' onclick='showSC()'><img class='topBUTf' src="public/buttons/buttonC.svg"> </button>
       <button title='Click here to  modify the background map and the layers opacity' class='topBUT' id='topBUTbg' onclick='showBG()'><img class='topBUTf' src="public/buttons/buttonS.svg"> </button>
       <button title='Click here to download the data shown on the map' disabled class='topBUT' id='topBUTdwn' onclick='showDWN()'><img class='topBUTf' src="public/buttons/buttonD.svg"> </button>
-      <button title='Click here to see the support information' class='topBUT'><img class='topBUTf' src="public/buttons/buttonQ.svg" onclick="document.getElementById('supMOD').style.display='block'"> </button>
+      <button title='Click here to see the support information' class='topBUT' id='topBUTsup'><img class='topBUTf' src="public/buttons/buttonQ.svg" onclick="document.getElementById('supMOD').style.display='block'"> </button>
 
 
     </div>
@@ -48,7 +48,7 @@
       <div id='legendplotSC'></div>
     </div>
   
-    <div id="startup">
+    <div id="hints">
     </div>
 
     <button title='Click here to add the variable shown on the map to the download list' id='addDown' onclick='addCUSTOMdwnL()'><img id='addDownF' src="public/buttons/buttonADD.svg"></button>
@@ -248,8 +248,8 @@
       </div>
       <div id='DWNcontent' class='PANcontent'>
       
-      <button onclick='exportPDF()'>Map as PDF</button>
-      <button onclick='openDWNwindow()'>Reef data as CSV table</button>
+      <button id ='dwnPDFb' onclick='exportPDF()'>Map as PDF</button>
+      <button id ='dwnCSVb' onclick='openDWNwindow()'>Reef data as CSV table</button>
     </div>
     </div>
     

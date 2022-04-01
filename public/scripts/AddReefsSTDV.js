@@ -9,7 +9,11 @@ addReefs = function(nevar, data) {
 
   evar=nevar
 
-  if (evar == '') { }
+  if (evar == '') { 
+    // add panels
+    document.getElementById('topBUTsc').disabled=false
+    document.getElementById('topBUTenv').disabled=false
+    document.getElementById('topBUTdwn').disabled=false}
   else {
 
   // find component of variable (environmental variable + statistic) for legend
@@ -50,10 +54,7 @@ addLayersList(evar)
 // update layerlist of download window
 updateLayerListDWN()
 
-// add panels
-document.getElementById('topBUTsc').disabled=false
-document.getElementById('topBUTenv').disabled=false
-document.getElementById('topBUTdwn').disabled=false
+
 document.getElementById('transppan').style.display='block'
 document.getElementById('modepanel').style.display='block'
 document.getElementById('Layerpan').style.display='block'
