@@ -197,7 +197,6 @@
               <td style="width: 40%;">Greyscale</td>
               <td style="width: 40%;"><input id='bggsid' type='checkbox' onchange='makebg()'></td>
             </tr>
-
           </table>
       
                <div id='transppan' style="display: none;">
@@ -235,7 +234,33 @@
            
           </div>
 
-     
+          <div id='POIstyle' style="display:none">
+            <br>
+            <h6>Points of interest</h6>
+            <table style="width : 80%">
+              <tr>
+                <td style="width: 40%">Color</td>
+                <td style="width: 40%">  <input type="color" id='POIcol' style="width: 1cm;" value="#ff33f9" onchange="POIstyleMOD('color')">  </td>
+              </tr>
+              <tr>
+                <td style="width: 40%">Point size</td>
+                <td style="width: 40%"><button style="width: 0.5cm;" onclick="POIstyleMOD('minusP')">-</button><button style="width: 0.5cm;" onclick="POIstyleMOD('plusP')">+</button></td>
+              </tr>
+              <tr>
+                <td style="width: 40%">Display point</td>
+                <td style="width: 40%;"><input type='checkbox' id='cbPOIp' onchange="POIstyleMOD('displayP')" checked></td>
+              </tr>
+              <tr>
+                <td style="width: 40%">Label size</td>
+                <td style="width: 40%"><button style="width: 0.5cm;" onclick="POIstyleMOD('minusL')">-</button><button style="width: 0.5cm;" onclick="POIstyleMOD('plusL')">+</button></td>
+              </tr>
+              <tr>
+                <td style="width: 40%">Display labal</td>
+                <td style="width: 40%;"><input type='checkbox' id='cbPOIl' onchange="POIstyleMOD('displayL')" checked></td>
+              </tr>
+            </table>
+
+           </div>
       </div>
     </div>
 

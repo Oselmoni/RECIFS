@@ -264,7 +264,7 @@ runHints = function(hintSteps) {
   'Note also that it is also possible to download custom environmental variables computed in the advanced mode. '+
   'To do so, you first need to compute the variable and visualize it on the map. '+
   'Next, you have to click on the <img style="width:0.7cm" src="public/buttons/buttonADD.svg"> button (located on the left of the map).<br>'+
-  'This will add the variable currently displayed on the map to the download list.'+
+  'This will add the variable currently displayed on the map to the download list.<br>'+
   '<button onclick="runHints(29)"> Next </button>'
 
 } else if (hintSteps==29) { // 29 ->  download CSV -4

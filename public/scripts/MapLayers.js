@@ -62,22 +62,63 @@ var AOIvector = new ol.layer.Vector({
 
 // points of interest (points added by client)
 
+// create style
+var POIfontsize = 20
+var POIradius = 5
+
+var POIstyle = new ol.style.Style({ 
+  image: new ol.style.Circle({
+    radius: POIradius,
+    fill: new ol.style.Fill({color: 'purple'}),
+    stroke: new ol.style.Stroke({color: 'black', width: 3})
+  }),
+  text: new ol.style.Text({
+    font: 'bold '+POIfontsize+'px "Open Sans", "Arial Unicode MS", "sans-serif"',
+    offsetY: -POIfontsize,
+    fill: new ol.style.Fill({color: 'white'}),
+    stroke: new ol.style.Stroke({color: 'black', width: 2}),
+})
+})
+
+// function to use feature name as label
+var POIstyleFunction = function(feature) {
+  POIstyle.getText().setText(feature.get('name'));
+  return POIstyle;
+}
+
+// create source and vector
 var POIsource = new ol.source.Vector({
   format: new ol.format.GeoJSON(),
   });
   
 var POIvector = new ol.layer.Vector({
   source: POIsource ,
-  style : new ol.style.Style({ 
-    image: new ol.style.Circle({
-          radius: 5,
-          fill: new ol.style.Fill({color: 'purple'}),
-          stroke: new ol.style.Stroke({color: 'white', width: 3})
-    })
-  })
+  style : POIstyleFunction
   }); 
 
+// function to change visualization settings
+POIstyleMOD = function(mode) {
 
+  // run reponse to different type of input/modes 
+  if (mode=='color') {
+    POIstyle.getImage().getFill().setColor(document.getElementById('POIcol').value)
+      }
+
+  if (mode=='minusP') { if (POIradius>=0) {POIradius = POIradius-5} }
+  if (mode=='plusP') { POIradius = POIradius+5}
+  if (mode=='displayP') {  POIstyle.getImage().setOpacity(document.getElementById('cbPOIp').checked)     }
+  
+  if (mode=='minusL') { if (POIfontsize>=0) {POIfontsize = POIfontsize-5
+  } }
+  if (mode=='plusL') { POIfontsize = POIfontsize+5}
+  if (mode=='displayL') {  
+    if (document.getElementById('cbPOIl').checked) {POIfontsize=20} else {POIfontsize=0}   
+  }  
+  
+  POIstyle.getText().setFont('bold '+POIfontsize+'px "Open Sans", "Arial Unicode MS", "sans-serif"')
+  POIstyle.getImage().setRadius(POIradius)
+  POIvector.setStyle(POIstyleFunction)
+}
   
 
 // function to change background map

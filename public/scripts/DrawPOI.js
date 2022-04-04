@@ -34,6 +34,7 @@ POIsource.on('addfeature', function(evt) {
     } else {
       POIsource.getFeatures()[POIsource.getFeatures().length-1].setProperties({'name' : pointName }) // add name to feature
       pointN = pointN + 1 
+      document.getElementById('POIstyle').style.display='block' // add display parameters
     }
   }
     map.addInteraction(POIDraw)

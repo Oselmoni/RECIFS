@@ -89,6 +89,10 @@ showBG = function() {
   document.getElementById('bgpan').style.display='block'
   document.getElementById('BGcontent').style.display='block'
 
+  if (POIsource.getFeatures().length>0) {
+    document.getElementById('POIstyle').style.display='block'
+  }
+
 }
 
 removeBG = function() {
