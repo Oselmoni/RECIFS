@@ -57,237 +57,240 @@
     <button title='Click here to add the variable shown on the map to the download list' id='addDown' onclick='addCUSTOMdwnL()'><img id='addDownF' src="public/buttons/buttonADD.svg"></button>
   
   
+  
     <div id='sidePAN'> 
 
-    <div id='POIpan'>
-        <h5>POINTS OF INTEREST</h5>
-        <div class='visCON' id='visCONpoi'>
-          <button id='miniPOI' onclick="hideUnhidePOI()" class='visCONbut'>-</button>
-          <button id='hidePOI' onclick="removePOI()" class='visCONbut'>x</button>
+      <div id='POIpan'>
+          <h5>POINTS OF INTEREST</h5>
+          <div class='visCON' id='visCONpoi'>
+            <button id='miniPOI' onclick="hideUnhidePOI()" class='visCONbut'>-</button>
+            <button id='hidePOI' onclick="removePOI()" class='visCONbut'>x</button>
+          </div>
+          <div id='POIcontent' class='PANcontent'>
+          <button id='POIaddB' onclick='addPOI()' class='poiBUT'>Add on map</button>
+          <button onclick='openMODALupload()' class='poiBUT'>Add from file</button>
+          <button id='POIremB' onclick='remPOI()' class='poiBUT'>Remove from map</button>
+          <button onclick='remALLPOI()' class='poiBUT'>Remove all</button>
         </div>
-        <div id='POIcontent' class='PANcontent'>
-        <button id='POIaddB' onclick='addPOI()' class='poiBUT'>Add on map</button>
-        <button onclick='openMODALupload()' class='poiBUT'>Add from file</button>
-        <button id='POIremB' onclick='remPOI()' class='poiBUT'>Remove from map</button>
-        <button onclick='remALLPOI()' class='poiBUT'>Remove all</button>
       </div>
-    </div>
-
-
-    <div id='ENVpan'>
-      <h5>ENVIRONMENT</h5>
-      <div class='visCON' id='visCONenv'>
-        <button id='miniENV' onclick="hideUnhideENV()" class='visCONbut'>-</button>
-        <button id='hideENV' onclick="removeENV()" class='visCONbut'>x</button>
-      </div>
-      <div id='ENVcontent' class='PANcontent'>
-      <div id='modepanel'>
-        <button id='stmbutton' class='ENVmodeBUT' style="background-color: green;" onclick="STMOD()">STANDARD</button>
-        <button id='ambutton' class='ENVmodeBUT' onclick="ADMOD()">ADVANCED</button>
-        <br><br>
-      </div>
-      
-      <div id='Layerpan'>
-        <table id='layerlist'>
-        </table>
-     
-    
-        <div id='advancedpanel' style='display:none'>
-          Select variable:
-          <select id='advSELVAR'></select>
-        <div id='advBUF'><br>
-          Select buffer size:
-          <select id='advSELbuf'></select>
-          <br><br><br>
-        </div>
-        <div id='advTIME' style='display:none'><br>
-          <input type='checkbox' id='allyearsCB' checked=true>Use all years <br>
-          Select starting year:
-          <select id='advSELsy' disabled></select> <br>
-          Select end year:
-          <select id='advSELey' disabled></select> <br><br>
-          <input type='checkbox' id='allmonthsCB' checked=true>Use all months <br>
-          Select months of interest:
-          <table>
-            <tr><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th></tr>
-            <tr>
-              <td><input type='checkbox' id='months01' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months02' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months03' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months04' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months05' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months06' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months07' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months08' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months09' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months10' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months11' class='cbmonths' disabled checked=true></td>
-              <td><input type='checkbox' id='months12' class='cbmonths' disabled checked=true></td>
-            </tr>
-              
-               </table>
-          <br> Select function:
-          <select id='advSELfun'>
-            <option>Mean</option>
-            <option>Standard deviation</option>
-            <option>Median</option>    
-            <option>Maximum</option>
-            <option>Minimum</option>
-          </select> <br><br><br>
-        </div>
-        <div id='advCS'>
-          <input type='checkbox' id='customizeCSLcb'>Customize colorscale limits:<br>
-          Min:<input type="number" id='minCS' style="width: 20%;" disabled></input> Max:<input type="number" id='maxCS' style="width: 20%;" disabled></input><br>
-          <br><br>
-          <input type='checkbox' id='customizeCSCcb'>Customize colorscale:<br>
-          <input type="color" id='lowCOL' style="width: 1cm;" disabled> Low values<br>
-          <input type="color" id='midCOL' style="width: 1cm;" disabled> Mid values<br>
-          <input type="color" id='highCOL' style="width: 1cm;" disabled> High values<br>
-        </div> <br><br><br>
-        <div style="text-align: center; background-color: inherit;"><button id='runADVbut' onclick="advancedPOST()">RUN</button></div>
-        </div>
-        <br><br>
-       </div>
-      </div>
-    </div>
   
-    <div id='SCpan'>
-      <h5>SEA CURRENTS <button class='ENVinfoB' onclick="promptInfoSC()">i</button></h5>
-      <div class='visCON' id='visCONsc'>
-        <button id='miniSC' onclick="hideUnhideSC()" class='visCONbut'>-</button>
-        <button id='hideSC' onclick="removeSC()"class='visCONbut'>x</button>
-      </div>
-      <div id='SCcontent' class='PANcontent'>
-        Use all months <input type='checkbox' id='custSCcb' checked=true onchange="cbSC()"><br>
-        <div id='SCmonthsDIV' style='display:none;'>Select month of interest:
-          <select id='SCmonthsSEL' disabled>
-            <option id='sc01'>January</option>
-            <option id='sc02'>February</option>
-            <option id='sc03'>March</option>
-            <option id='sc04'>April</option>
-            <option id='sc05'>May</option>
-            <option id='sc06'>June</option>
-            <option id='sc07'>July</option>
-            <option id='sc08'>August</option>
-            <option id='sc09'>September</option>
-            <option id='sc10'>October</option>
-            <option id='sc11'>November</option>
-            <option id='sc12'>December</option>
-          </select>
+  
+      <div id='ENVpan'>
+        <h5>ENVIRONMENT</h5>
+        <div class='visCON' id='visCONenv'>
+          <button id='miniENV' onclick="hideUnhideENV()" class='visCONbut'>-</button>
+          <button id='hideENV' onclick="removeENV()" class='visCONbut'>x</button>
         </div>
-          <button onclick='postSC()' id='displaySCb'>Display sea currents</button><br>
-      </div>
+        <div id='ENVcontent' class='PANcontent'>
+        <div id='modepanel'>
+          <button id='stmbutton' class='ENVmodeBUT' style="background-color: green;" onclick="STMOD()">STANDARD</button>
+          <button id='ambutton' class='ENVmodeBUT' onclick="ADMOD()">ADVANCED</button>
+          <br><br>
+        </div>
+        
+        <div id='Layerpan'>
+          <table id='layerlist'>
+          </table>
+       
+      
+          <div id='advancedpanel' style='display:none'>
+            Select variable:
+            <select id='advSELVAR'></select>
+          <div id='advBUF'><br>
+            Select buffer size:
+            <select id='advSELbuf'></select>
+            <br><br><br>
+          </div>
+          <div id='advTIME' style='display:none'><br>
+            <input type='checkbox' id='allyearsCB' checked=true>Use all years <br>
+            Select starting year:
+            <select id='advSELsy' disabled></select> <br>
+            Select end year:
+            <select id='advSELey' disabled></select> <br><br>
+            <div id="advMONTH">
+            <input type='checkbox' id='allmonthsCB' checked=true>Use all months <br>
+            Select months of interest:
+            <table>
+              <tr><th>01</th><th>02</th><th>03</th><th>04</th><th>05</th><th>06</th><th>07</th><th>08</th><th>09</th><th>10</th><th>11</th><th>12</th></tr>
+              <tr>
+                <td><input type='checkbox' id='months01' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months02' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months03' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months04' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months05' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months06' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months07' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months08' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months09' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months10' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months11' class='cbmonths' disabled checked=true></td>
+                <td><input type='checkbox' id='months12' class='cbmonths' disabled checked=true></td>
+              </tr>
+                
+                 </table>
+                </div>
+            <br> Select function:
+            <select id='advSELfun'>
+              <option>Mean</option>
+              <option>Standard deviation</option>
+              <option>Median</option>    
+              <option>Maximum</option>
+              <option>Minimum</option>
+            </select> <br><br><br>
+          </div>
+          <div id='advCS'>
+            <input type='checkbox' id='customizeCSLcb'>Customize colorscale limits:<br>
+            Min:<input type="number" id='minCS' style="width: 20%;" disabled></input> Max:<input type="number" id='maxCS' style="width: 20%;" disabled></input><br>
+            <br><br>
+            <input type='checkbox' id='customizeCSCcb'>Customize colorscale:<br>
+            <input type="color" id='lowCOL' style="width: 1cm;" disabled> Low values<br>
+            <input type="color" id='midCOL' style="width: 1cm;" disabled> Mid values<br>
+            <input type="color" id='highCOL' style="width: 1cm;" disabled> High values<br>
+          </div> <br><br><br>
+          <div style="text-align: center; background-color: inherit;"><button id='runADVbut' onclick="advancedPOST()">RUN</button></div>
+          </div>
+          <br><br>
+         </div>
+        </div>
       </div>
     
-    <div id='bgpan'>
-        <h5>DISPLAY SETTINGS</h5>
-        <div class='visCON' id='visCONbg'>
-          <button id='miniBG' onclick="hideUnhideBG()" class='visCONbut'>-</button>
-          <button id='hideBG' onclick="removeBG()"class='visCONbut'>x</button>
+      <div id='SCpan'>
+        <h5>SEA CURRENTS <button class='ENVinfoB' onclick="promptInfoSC()">i</button></h5>
+        <div class='visCON' id='visCONsc'>
+          <button id='miniSC' onclick="hideUnhideSC()" class='visCONbut'>-</button>
+          <button id='hideSC' onclick="removeSC()"class='visCONbut'>x</button>
         </div>
-        <div id='BGcontent' class='PANcontent'>
-          <h6>Background map</h6>
-          <table>
-            <tr>
-              <td style="width: 40%;">Select type</td>
-              <td style="width: 40%;"> <select id='bgid' onchange='makebg()'>
-                <option value='osm'>Open Street Map</option>
-                <option value='shp'>Land</option>
-                <option value='ree'>Land and reefs</option>
-              </select></td>
-            </tr>
-            <tr>
-              <td style="width: 40%;">Greyscale</td>
-              <td style="width: 40%;"><input id='bggsid' type='checkbox' onchange='makebg()'></td>
-            </tr>
-          </table>
+        <div id='SCcontent' class='PANcontent'>
+          Use all months <input type='checkbox' id='custSCcb' checked=true onchange="cbSC()"><br>
+          <div id='SCmonthsDIV' style='display:none;'>Select month of interest:
+            <select id='SCmonthsSEL' disabled>
+              <option id='sc01'>January</option>
+              <option id='sc02'>February</option>
+              <option id='sc03'>March</option>
+              <option id='sc04'>April</option>
+              <option id='sc05'>May</option>
+              <option id='sc06'>June</option>
+              <option id='sc07'>July</option>
+              <option id='sc08'>August</option>
+              <option id='sc09'>September</option>
+              <option id='sc10'>October</option>
+              <option id='sc11'>November</option>
+              <option id='sc12'>December</option>
+            </select>
+          </div>
+            <button onclick='postSC()' id='displaySCb'>Display sea currents</button><br>
+        </div>
+        </div>
       
-               <div id='transppan' style="display: none;">
-                <br>
- 
-            <h6>Reef environment</h6>
+      <div id='bgpan'>
+          <h5>DISPLAY SETTINGS</h5>
+          <div class='visCON' id='visCONbg'>
+            <button id='miniBG' onclick="hideUnhideBG()" class='visCONbut'>-</button>
+            <button id='hideBG' onclick="removeBG()"class='visCONbut'>x</button>
+          </div>
+          <div id='BGcontent' class='PANcontent'>
+            <h6>Background map</h6>
             <table>
-            <tr>
-            <td style="width: 40%;">Set opacity</td>
-            <td style="width: 40%;">0%<input id='reefTRA' type='range' min='0' max='100' value='100' style="width: 50%;" onchange="SetReefTransparency()">100%</td>
-           </tr>
-           <tr>
-            <td>Show legend</td>
-            <td> <input id='cblegend' type='checkbox' onchange="hidelegend()">  </td>
-          </tr>
-        </table>
-          </div>
- 
-        <div id='sctrans' style='display: none;'>
-          <br>
-          <h6>Sea currents</h6>
-          <table>
               <tr>
-                <td style="width: 40%;">Set opacity </td>
-                <td style="width: 40%;">0%<input id='scTRA' type='range' min='0' max='100' value='100' style="width: 50%;" onchange="SetSCTransparency()">100%</td>
+                <td style="width: 40%;">Select type</td>
+                <td style="width: 40%;"> <select id='bgid' onchange='makebg()'>
+                  <option value='osm'>Open Street Map</option>
+                  <option value='shp'>Land</option>
+                  <option value='ree'>Land and reefs</option>
+                </select></td>
               </tr>
               <tr>
-                <td style="width: 40%;">Show legend </td>
-                <td style="width: 40%"> <input id='cblegendSC' type='checkbox' onchange="hidelegendSC()"></td>
-              </tr>
-
-          </table>
-          
-          
-           
-          </div>
-
-          <div id='POIstyle' style="display:none">
-            <br>
-            <h6>Points of interest</h6>
-            <table style="width : 80%">
-              <tr>
-                <td style="width: 40%">Color</td>
-                <td style="width: 40%">  <input type="color" id='POIcol' style="width: 1cm;" value="#ff33f9" onchange="POIstyleMOD('color')">  </td>
-              </tr>
-              <tr>
-                <td style="width: 40%">Point size</td>
-                <td style="width: 40%"><button style="width: 0.5cm;" onclick="POIstyleMOD('minusP')">-</button><button style="width: 0.5cm;" onclick="POIstyleMOD('plusP')">+</button></td>
-              </tr>
-              <tr>
-                <td style="width: 40%">Display point</td>
-                <td style="width: 40%;"><input type='checkbox' id='cbPOIp' onchange="POIstyleMOD('displayP')" checked></td>
-              </tr>
-              <tr>
-                <td style="width: 40%">Label size</td>
-                <td style="width: 40%"><button style="width: 0.5cm;" onclick="POIstyleMOD('minusL')">-</button><button style="width: 0.5cm;" onclick="POIstyleMOD('plusL')">+</button></td>
-              </tr>
-              <tr>
-                <td style="width: 40%">Display labal</td>
-                <td style="width: 40%;"><input type='checkbox' id='cbPOIl' onchange="POIstyleMOD('displayL')" checked></td>
+                <td style="width: 40%;">Greyscale</td>
+                <td style="width: 40%;"><input id='bggsid' type='checkbox' onchange='makebg()'></td>
               </tr>
             </table>
-
-           </div>
-      </div>
-    </div>
-
-    
-    <div id='exportPAN'>
-      <h5>DOWNLOAD</h5>
-      <div class='visCON' id='visCONdwn'>
-        <button id='miniDWN' onclick="hideUnhideDWN()" class='visCONbut'>-</button>
-        <button id='hideDWN' onclick="removeDWN()"class='visCONbut'>x</button>
-      </div>
-      <div id='DWNcontent' class='PANcontent'>
-      
-      <button id ='dwnPDFb' onclick='exportPDF()'>Map as PDF</button>
-      <button id ='dwnCSVb' onclick='openDWNwindow()'>Reef data as CSV table</button>
-    </div>
-    </div>
-    
-    
-
-      
-    
+        
+                 <div id='transppan' style="display: none;">
+                  <br>
+   
+              <h6>Reef environment</h6>
+              <table>
+              <tr>
+              <td style="width: 40%;">Set opacity</td>
+              <td style="width: 40%;">0%<input id='reefTRA' type='range' min='0' max='100' value='100' style="width: 50%;" onchange="SetReefTransparency()">100%</td>
+             </tr>
+             <tr>
+              <td>Show legend</td>
+              <td> <input id='cblegend' type='checkbox' onchange="hidelegend()">  </td>
+            </tr>
+          </table>
+            </div>
+   
+          <div id='sctrans' style='display: none;'>
+            <br>
+            <h6>Sea currents</h6>
+            <table>
+                <tr>
+                  <td style="width: 40%;">Set opacity </td>
+                  <td style="width: 40%;">0%<input id='scTRA' type='range' min='0' max='100' value='100' style="width: 50%;" onchange="SetSCTransparency()">100%</td>
+                </tr>
+                <tr>
+                  <td style="width: 40%;">Show legend </td>
+                  <td style="width: 40%"> <input id='cblegendSC' type='checkbox' onchange="hidelegendSC()"></td>
+                </tr>
   
+            </table>
+            
+            
+             
+            </div>
   
-    </div>
+            <div id='POIstyle' style="display:none">
+              <br>
+              <h6>Points of interest</h6>
+              <table style="width : 80%">
+                <tr>
+                  <td style="width: 40%">Color</td>
+                  <td style="width: 40%">  <input type="color" id='POIcol' style="width: 1cm;" value="#ff33f9" onchange="POIstyleMOD('color')">  </td>
+                </tr>
+                <tr>
+                  <td style="width: 40%">Point size</td>
+                  <td style="width: 40%"><button style="width: 0.5cm;" onclick="POIstyleMOD('minusP')">-</button><button style="width: 0.5cm;" onclick="POIstyleMOD('plusP')">+</button></td>
+                </tr>
+                <tr>
+                  <td style="width: 40%">Display point</td>
+                  <td style="width: 40%;"><input type='checkbox' id='cbPOIp' onchange="POIstyleMOD('displayP')" checked></td>
+                </tr>
+                <tr>
+                  <td style="width: 40%">Label size</td>
+                  <td style="width: 40%"><button style="width: 0.5cm;" onclick="POIstyleMOD('minusL')">-</button><button style="width: 0.5cm;" onclick="POIstyleMOD('plusL')">+</button></td>
+                </tr>
+                <tr>
+                  <td style="width: 40%">Display labal</td>
+                  <td style="width: 40%;"><input type='checkbox' id='cbPOIl' onchange="POIstyleMOD('displayL')" checked></td>
+                </tr>
+              </table>
+  
+             </div>
+        </div>
+      </div>
+  
+      
+      <div id='exportPAN'>
+        <h5>DOWNLOAD</h5>
+        <div class='visCON' id='visCONdwn'>
+          <button id='miniDWN' onclick="hideUnhideDWN()" class='visCONbut'>-</button>
+          <button id='hideDWN' onclick="removeDWN()"class='visCONbut'>x</button>
+        </div>
+        <div id='DWNcontent' class='PANcontent'>
+        
+        <button id ='dwnPDFb' onclick='exportPDF()'>Map as PDF</button>
+        <button id ='dwnCSVb' onclick='openDWNwindow()'>Reef data as CSV table</button>
+      </div>
+      </div>
+      
+      
+  
+        
+      
+    
+    
+      </div>
   
 
     </div>

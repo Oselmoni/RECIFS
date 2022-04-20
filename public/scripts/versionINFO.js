@@ -2,4 +2,4 @@
 
 document.getElementById('versionINFO').innerHTML = 'Database version: '+ versionINFO.DB.version + ' (released '+versionINFO.DB.releaseDate+')'+
                                                     '<br>'+
-                                                    'Webapp version: '+ versionINFO.webapp.version + ' (released '+versionINFO.webapp.releaseDate+')'
+                                                    'Web-app version: '+ versionINFO.webapp.version + ' (released '+versionINFO.webapp.releaseDate+')'

@@ -5,7 +5,7 @@ source('public/R-scripts/roundDecimal.R')
 # load('public/DB/allDB_coords.rda')
 # source('public/R-scripts/roundDecimal.R')
 
-#save(input, file='input.rda')
+save(input, file='input.rda')
 
 ### Load coordinates
 load('public/DB/allDB_coords.rda')
@@ -19,6 +19,7 @@ BUFVAR = input[[1]]$ADVreq$buffer
 
 # load all data for variable of interest
 load(paste0('public/DB/DBadvanced/s_allDB_',ENVVAR,'_',BUFVAR,'.rda'))
+
 
 ### find reefs in AOI
 AOI=input[[1]]$ADVreq$AOI # load AOI arriving from client
@@ -57,18 +58,27 @@ if (nrow(reefs_AOI)==0) {return('{"Error": "No reefs available for this area"}')
   } else if (nrow(reefs_AOI)>=5) {
 
 ### different behaviour if variable is temporal or fixed:
-if (input[[1]]$ADVreq$typeVAR=='-') { # if fixed...
+if (input[[1]]$ADVreq$typeVAR=='F') { # if fixed...
   
   OUTVAR = s_allDB[rownames(reefs_AOI),]
   
   outvarid = paste0(ENVVAR,'_X_',BUFVAR) # 'X' indicates fixed variable 
   
-} else { # if temporal
+} else  { # if temporal 
+  
+  if (input[[1]]$ADVreq$typeVAR=='Y') {  # if yearly resolution variable
+    
+    selectedY = substr(input[[1]]$ADVreq$time$years$ys, 2,5):substr(input[[1]]$ADVreq$time$year$ye, 2,5)
+    availableY = matrix(unlist(strsplit(colnames(s_allDB), '_X')), ncol=2, byrow=T)[,2]
+    
+    OUTVARM = s_allDB[rownames(reefs_AOI),paste0(ENVVAR,'_X',selectedY[selectedY%in%availableY]),drop=F] # matrix for computation of temporal variable
+    
+  } else {  # if monthly resolution variable...
   
   # four alternatives: all years + all months, all years + some months, some years + all months, some y + some m
   
   if (input[[1]]$ADVreq$time$years$cb==TRUE&input[[1]]$ADVreq$time$months$cb==TRUE) { # all y and m
-    OUTVARM = s_allDB[rownames(reefs_AOI),] # matrix for computation of temporal variable
+    OUTVARM = s_allDB[rownames(reefs_AOI),,drop=F] # matrix for computation of temporal variable
 
 
    } else if (input[[1]]$ADVreq$time$years$cb==TRUE&input[[1]]$ADVreq$time$months$cb!=TRUE) { # all y, some m
@@ -79,7 +89,7 @@ if (input[[1]]$ADVreq$typeVAR=='-') { # if fixed...
     
     # find months requested by client
     selectedM = sprintf('%02d', which(input[[1]]$ADVreq$time$months$ms=='1'))
-    OUTVARM = s_allDB[rownames(reefs_AOI),monthsindex%in%selectedM]
+    OUTVARM = s_allDB[rownames(reefs_AOI),monthsindex%in%selectedM,drop=F]
     
     
   } else if (input[[1]]$ADVreq$time$years$cb!=TRUE&input[[1]]$ADVreq$time$months$cb==TRUE) { # some y, all m
@@ -90,7 +100,7 @@ if (input[[1]]$ADVreq$typeVAR=='-') { # if fixed...
     
     # find years requested by client
     selectedY = substr(input[[1]]$ADVreq$time$years$ys, 2,5):substr(input[[1]]$ADVreq$time$year$ye, 2,5)
-    OUTVARM = s_allDB[rownames(reefs_AOI),yearsindex%in%selectedY]
+    OUTVARM = s_allDB[rownames(reefs_AOI),yearsindex%in%selectedY,drop=F]
   
     
     } else if (input[[1]]$ADVreq$time$years$cb!=TRUE&input[[1]]$ADVreq$time$months$cb!=TRUE) { # some y, some m
@@ -104,9 +114,9 @@ if (input[[1]]$ADVreq$typeVAR=='-') { # if fixed...
     selectedY = substr(input[[1]]$ADVreq$time$years$ys, 2,5):substr(input[[1]]$ADVreq$time$year$ye, 2,5)
     selectedM = sprintf('%02d', which(input[[1]]$ADVreq$time$months$ms=='1'))
     
-    OUTVARM = s_allDB[rownames(reefs_AOI),yearsindex%in%selectedY&monthsindex%in%selectedM]
+    OUTVARM = s_allDB[rownames(reefs_AOI),yearsindex%in%selectedY&monthsindex%in%selectedM,drop=F]
   }
-  
+  }
   # check if there are columns (if temporal extent is not exceeded)
   
   if (ncol(OUTVARM)==0) {
@@ -117,8 +127,10 @@ if (input[[1]]$ADVreq$typeVAR=='-') { # if fixed...
     if (input[[1]]$ADVreq$fun=='Mean') {
       OUTVAR = apply(OUTVARM, 1, mean, na.rm=T)
       outvarid = paste0(ENVVAR,'_me_',BUFVAR)}
-    if (input[[1]]$ADVreq$fun=='Standard deviation') {OUTVAR = apply(OUTVARM, 1, sd, na.rm=T)
-      outvarid = paste0(ENVVAR,'_sd_',BUFVAR)}
+    if (input[[1]]$ADVreq$fun=='Standard deviation') {
+      if (ncol(OUTVARM)<=1) {OUTVAR = rep(0, length=nrow(OUTVARM)); names(OUTVAR) = rownames(OUTVARM)} else {
+      OUTVAR = apply(OUTVARM, 1, sd, na.rm=T)}
+      outvarid = paste0(ENVVAR,'_sd_',BUFVAR)} 
     if (input[[1]]$ADVreq$fun=='Minimum') {OUTVAR = apply(OUTVARM, 1, min, na.rm=T)   
       outvarid = paste0(ENVVAR,'_mi_',BUFVAR)}
     if (input[[1]]$ADVreq$fun=='Maximum') {OUTVAR = apply(OUTVARM, 1, max, na.rm=T)

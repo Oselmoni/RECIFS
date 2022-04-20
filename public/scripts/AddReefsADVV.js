@@ -71,7 +71,7 @@ STMOD = function() {
         advSELbuf.appendChild(nop)
       })
 
-    if (metaVAR[selopt].varTime=='-') {  // if variable without temporal resolution...
+    if (metaVAR[selopt].varType=='F') {  // if variable without temporal resolution...
       // de-activate temporal menu
       document.getElementById('advTIME').style.display = 'none'
   
@@ -80,10 +80,25 @@ STMOD = function() {
       // activate temporal menu
       document.getElementById('advTIME').style.display = 'block'
   
-      // find years available for variable of interest from metadata
+          // create index of years available for variable
+      var varYears = []
+
+      // fill index: 
+      if (metaVAR[selopt].varType=='M') { // if monthly variable (continous year range)
+        document.getElementById('advMONTH').style.display = 'block'
+
       var sy = Number(metaVAR[selopt].varTime.slice(0,4)) // start year
       var ey = Number(metaVAR[selopt].varTime.slice(5,9)) // end year
-  
+      for (var i = sy; i <= ey; i++) { 
+          varYears.push(i)
+
+      }} else { // if yearly variable (discrete year range)
+        document.getElementById('advMONTH').style.display = 'none'
+
+          varYears = metaVAR[selopt].varTime.split(',')
+
+      }
+
       // create one option for every year
       var advSELsy = document.getElementById('advSELsy')
       var advSELey = document.getElementById('advSELey')
@@ -91,17 +106,22 @@ STMOD = function() {
       advSELsy.innerHTML=''
       advSELey.innerHTML=''
   
-      for (var i = sy; i <= ey; i++) {
-          nopS = document.createElement('option')
-          nopS.innerText = String(i)
-          nopS.id = 'S'+String(i)
-          advSELsy.appendChild(nopS)
-          nopE = document.createElement('option')
-          nopE.innerText = String(i)
-          nopE.id = 'E'+String(i)
-          advSELsy.appendChild(nopE)
-          advSELey.appendChild(nopE)
-      }
+
+      varYears.forEach(function(i) {
+
+        nopS = document.createElement('option')
+        nopS.innerText = String(i)
+        nopS.id = 'S'+String(i)
+        advSELsy.appendChild(nopS)
+        nopE = document.createElement('option')
+        nopE.innerText = String(i)
+        nopE.id = 'E'+String(i)
+        advSELsy.appendChild(nopE)
+        advSELey.appendChild(nopE)
+
+       } )
+
+
   
       // set first year and last year a defeault
       advSELsy.selectedIndex = 0
@@ -222,7 +242,7 @@ STMOD = function() {
     
     // fill request object with form values
     advreqO.envvar = document.getElementById('advSELVAR').selectedOptions[0].id
-    advreqO.typeVAR = metaVAR[advreqO.envvar].varTime
+    advreqO.typeVAR = metaVAR[advreqO.envvar].varType
     advreqO.buffer = document.getElementById('advSELbuf').selectedOptions[0].id
 
     if (advreqO.typeVAR!='-') {    // if variable with temporal resolution: add data on time
@@ -276,7 +296,7 @@ STMOD = function() {
     advreqO.csCOL.mid = document.getElementById('midCOL').value 
     advreqO.csCOL.max = document.getElementById('highCOL').value
   
-    if (advreqO.csLIM.min>advreqO.csLIM.max) {
+    if (Number(advreqO.csLIM.min)>Number(advreqO.csLIM.max)) {
       alert('Minimum colorscale limits can not be higher than maximum limit.')
       return
     }

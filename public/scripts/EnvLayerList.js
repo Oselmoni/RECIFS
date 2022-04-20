@@ -32,14 +32,26 @@ addLayersList = function(evar) {
     nrow.className = 'ENVrow'
     // find statistics available for current environmental condition
     var stats = metaVAR[item].varSTATS.split(',')
+
+    // find var type
+    var vType = metaVAR[item].varType
     
     // create a button for every statistic
     stats.forEach(function(stat) {
-        var statid = stat.split('_')[1] // id of the stat
-        if (statid=='X') {var statid = stat.split('_')[2]} // if a fixed variable --> use buffer size as stat id
-        var statele = document.createElement('td')
-        const statbut = document.createElement('button')
+      // create button
+      var statele = document.createElement('td')
+      const statbut = document.createElement('button')
+
+      // set button text
+      if (vType == 'M') { // if monthly variable
+        var statid = stat.split('_')[1]
         statbut.innerText = metaSTAT[statid].statNAMELL
+      } else  { // if fixed or yearly variable
+        var statid = stat.split('_')[2]
+        statbut.innerText = metaSTAT[statid].statNAMELL
+      }
+
+      // add function to button
         statbut.onclick = function() {
           addReefs(stat, dataR) } 
         if (stat==evar) {statbut.style.backgroundColor = accol}
