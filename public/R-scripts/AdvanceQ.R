@@ -5,7 +5,7 @@ source('public/R-scripts/roundDecimal.R')
 # load('public/DB/allDB_coords.rda')
 # source('public/R-scripts/roundDecimal.R')
 
-save(input, file='input.rda')
+#save(input, file='input.rda')
 
 ### Load coordinates
 load('public/DB/allDB_coords.rda')
