@@ -107,8 +107,8 @@ addPOI = function() {
       map.removeInteraction(AOIPolyDraw)
       POImode = 'drawing'
       document.getElementById('POIaddB').style.backgroundColor = accol
-      document.getElementById('POIremB').style.backgroundColor = secol
-      document.getElementById('drawAOIbutton').style.backgroundColor = secol
+      document.getElementById('POIremB').style.backgroundColor = null
+      document.getElementById('drawAOIbutton').style.backgroundColor = null
     } else {
       POImode = null
       map.removeInteraction(POIDraw)
@@ -125,9 +125,9 @@ remPOI = function() {
     map.addInteraction(POIremovepointer)
     map.removeInteraction(AOIPolyDraw)
     POImode = 'removing'
-    document.getElementById('drawAOIbutton').style.backgroundColor = secol
+    document.getElementById('drawAOIbutton').style.backgroundColor = null
     document.getElementById('POIremB').style.backgroundColor = accol
-    document.getElementById('POIaddB').style.backgroundColor = secol
+    document.getElementById('POIaddB').style.backgroundColor = null
   } else {
     POImode = null
     map.removeInteraction(POIremove)

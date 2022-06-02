@@ -22,7 +22,7 @@ runHints = function(hintSteps) {
       document.getElementById('hints').innerHTML = 
                                   'Welcome to the tutorial of RECIFS! '+
                                   '<br>In this tutorial, you will learn how to use the different functionalities of RECIFS.'+
-                                  '<br>Plese follow the instructions displayed in the black boxes.'+
+                                  '<br>Please follow the instructions displayed in the black boxes.'+
                                   '<br><button onclick="{runHints(1)}"> Let\'s start! </button>'
 
 
@@ -30,7 +30,7 @@ runHints = function(hintSteps) {
  } else if (hintSteps==1) { // 1 -->  study area intro
     document.getElementById('hints').innerHTML = 'The first step is selecting an area of interest. '+
     'Any region of the world hosting coral reefs can be selected. <br>'+
-    'There are no particular restriction in size, but bear in mind that if you select very large areas the computations of RECIFS will be slower.'+
+    'There are no particular restrictions in size, but bear in mind that if you select very large areas the computations of RECIFS will be slower.'+
     '<br><button onclick="runHints(2)"> Next </button>'
 
 
@@ -41,7 +41,7 @@ runHints = function(hintSteps) {
 
 
   document.getElementById('hints').innerHTML =  'In this tutorial, we will focus on the reefs of the Red Sea.'+
-   'Use the interactive map to find the Red Sea (highlighted in red on the map).'+
+   'Use the interactive map to locate the Red Sea area (highlighted in red on the map).'+
   '<br><button onclick="runHints(3)"> Next </button>'
 
 } else if (hintSteps==3) { // 3 --> select a study area
@@ -49,8 +49,8 @@ runHints = function(hintSteps) {
   // activate button study area
   document.getElementById('drawAOIbutton').disabled= false
 
-  document.getElementById('hints').innerHTML = 'To select a study area, click on the STUDY AREA button first.<br>'+
-  'Next, draw the area of interest directly on the map. Make sure to include the Red Sea region.  '
+  document.getElementById('hints').innerHTML = 'To select an area of interest, click on the AREA OF INTEREST button first.<br>'+
+  'Next, draw the area of interest directly on the map. Make sure to include the entire Red Sea region.  '
 
 } else if (hintSteps==4) { // 4 --> environnmental variation intro
 
@@ -62,7 +62,7 @@ runHints = function(hintSteps) {
   map.removeLayer(RSvector)
 
   document.getElementById('hints').innerHTML = 
-  'Now that you selected an area of interest, you can visualize environmental variation across the reef system.<br>'+
+  'Now that you selected an area of interest, you can visualize environmental variation across the reef system included in such area.<br>'+
   'To do so, click on the ENVIRONMENT button.'
 
 
@@ -75,27 +75,29 @@ runHints = function(hintSteps) {
   document.getElementById('hints').innerHTML = 
   'The ENVIRONMENT menu displays a list of environmental variables describing the seascape conditions.<br>'+
   'By clicking on the buttons next to each variable, you can visualize different statistics for every reef of the area of interest.<br>'+
-  'For example, the <button class="ENVstatB">mean</button> button will display the average values for a given variable.'+
+  'For example, the <button class="ENVstatB">mean</button> button will display the average values for a given variable over the past decades.'+
   '<br><button onclick="runHints(6)"> Next </button>'
 
 } else if (hintSteps==6) { // 6 --> environnmental variation: standard info
 
   document.getElementById('hints').innerHTML = 
   'If you want to find out more about an environmental variable, you can click on the <button class="ENVinfoB">i</button> button.<br>'+
-  'This will open a window displaying information about the source of the variable, the temporal range covered and the spatial resolution.'+
+  'This will open a window displaying information about the source of the variable, the spatial resolution and the temporal range covered.'+
   '<br><button onclick="runHints(7)"> Next </button>'
 
 } else if (hintSteps==7) { // 7 --> environnmental variation: standard vs advanced
 
   document.getElementById('hints').innerHTML = 
   'The environmental variables that you visualized so far are the "standard variables" of RECIFS.<br>'+
-  'These variables are precomputed to represent long-lasting environmental trends.'+
+  'These variables are precomputed to represent long-lasting environmental trends and fixed spatial resolutions.'+
   '<br><button onclick="runHints(8)"> Next </button>'
 
 } else if (hintSteps==8) { // 8 --> environnmental variation: to advanced
 
   document.getElementById('ambutton').disabled=false
-  document.getElementById('ambutton').style.backgroundColor=null
+  document.getElementById('stmbutton').disabled=true
+  document.getElementById('stmbutton').style.backgroundColor='grey'
+
   
   document.getElementById('hints').innerHTML = ''+
   'It is also possible to customize the computation of environmental variables using the "Advanced mode".<br>'+
@@ -108,19 +110,19 @@ runHints = function(hintSteps) {
 
 // turn off button standard mode
   document.getElementById('stmbutton').disabled=false
-  document.getElementById('stmbutton').style.backgroundColor=null
+  document.getElementById('stmbutton').style.backgroundColor='grey'
 
 
   document.getElementById('hints').innerHTML = 
-  'In the "Advanced mode", you can customize the calculation of environmental variables.<br>'+
-  'First, you can select any environmental variable, and calculate its value across buffer areas of different size surrounding the reefs of the area of interest.'+
+  'In the "Advanced mode", you can customize the calculation of the environmental variables.<br>'+
+  'First, you can select a specific environmental variable, and then set a buffer size that will be used to characterize the seascape conditions surrounding the reefs displayed on map.'+
   '<br><button onclick="runHints(10)"> Next </button>'
 
 } else if (hintSteps==10) { // 10 --> environnmental variation: advanced mode time
   
   document.getElementById('hints').innerHTML = 
   'You can also estimate trends for specific time periods. <br>'+
-  'You can focus on a specific temporal window (starting to ending year), and also on a specific seasons (select months of interest). <br>'+
+  'You can focus on a specific temporal window (starting to ending year), and also on a specific season (select months of interest). <br>'+
   '<button onclick="runHints(11)"> Next </button>'
 
 
@@ -135,7 +137,7 @@ runHints = function(hintSteps) {
   
   document.getElementById('hints').innerHTML =
   'Finally, you can customize the representation of the environmental variable on the map. <br>'+
-  'You can do this by modyfing the limits of the colorscale used, as well as the colors employed in the representation<br>'+
+  'You can do this by modifying the limits of the color scale used, as well as the colors employed in the representation<br>'+
   '<button onclick="runHints(13)"> Next </button>'
 
 } else if (hintSteps==13) { // 13 --> environnmental variation: advanced mode RUN
@@ -147,6 +149,7 @@ runHints = function(hintSteps) {
 } else if (hintSteps==14) { // 14 --> to sea currents
   
   document.getElementById('topBUTsc').disabled=false
+  document.getElementById('runADVbut').disabled=true
 
   document.getElementById('hints').innerHTML =
    'RECIFS can also be used to display sea currents across the reefs of the area of interest. <br>'+
@@ -158,7 +161,7 @@ runHints = function(hintSteps) {
 
   document.getElementById('hints').innerHTML =
   'In the sea current menu, you can set the parameters to display sea current averages on the map. <br>'+
-  'You can visualize sea current averages for the entire year, or for specific months only. <br>'
+  'You can visualize sea current averages for the entire year, or for specific months. <br>'
 
 } else if (hintSteps==16) { // 16 -->  sea currents resolution
   
@@ -169,17 +172,18 @@ runHints = function(hintSteps) {
 } else if (hintSteps==17) { // 17 --> to display settings
 
   document.getElementById('topBUTbg').disabled=false
+  document.getElementById('displaySCb').disabled=true
 
   document.getElementById('hints').innerHTML =
   'The rendering of layers on the map can be modified using the "Display Setting" menu. <br>'+
-  'Click on the DISPLAY SETTING button to open this menu'
+  'Click on the DISPLAY SETTINGS button to open this menu'
 
  } else if (hintSteps==18) { // 18 -> display settings
 
   document.getElementById('topBUTbg').disabled=true
 
   document.getElementById('hints').innerHTML =
-  'The display setting menu can be used to modify the visual properties of the map.<br>'+
+  'The "display settings" menu can be used to modify the visual properties of the map.<br>'+
   'You can select three different background maps and also activate a greyscale rendering.<br>'+
   '<button onclick="runHints(19)"> Next </button>'
 
@@ -205,7 +209,7 @@ runHints = function(hintSteps) {
 
   document.getElementById('hints').innerHTML =
   'There are two ways of adding point of interest to the map.<br>'+
-  'The first one is an interactive mode, activated/de-activated by clickign on the "Add on map" button <br>'+
+  'The first one is an interactive mode, activated/de-activated by clicking on the "Add on map" button <br>'+
   'When using this mode, you can add points by simply clicking on the map at the location of interest, and then specify the name of the location. <br>'+
   '<button onclick="runHints(22)"> Next </button>'
 
@@ -252,7 +256,7 @@ runHints = function(hintSteps) {
 } else if (hintSteps==27) { // 27 ->  download CSV -2
 
   document.getElementById('hints').innerHTML =
-  'By clicking on the "Reef data as CSV table" button, you can activate the menu to select which environmental variable to download.<br>'+
+  'By clicking on the "Reef data as CSV table" button, you can access the menu to select which environmental variable to download.<br>'+
   'Note that all the standard variables can be added/removed to/from the "Download List" using the arrow buttons.<br>'+
   '<button onclick="runHints(28)"> Next </button>'
 
@@ -264,7 +268,7 @@ runHints = function(hintSteps) {
   'Note also that it is also possible to download custom environmental variables computed in the advanced mode. '+
   'To do so, you first need to compute the variable and visualize it on the map. '+
   'Next, click on the <img style="width:0.7cm" src="public/buttons/buttonADD.svg"> button (located on the left of the map).<br>'+
-  'This will add to the download list the variable currently displayed in the map .<br>'+
+  'This will add the variable currently displayed on map to the download list.<br>'+
   '<button onclick="runHints(29)"> Next </button>'
 
 } else if (hintSteps==29) { // 29 ->  download CSV -4
@@ -272,6 +276,7 @@ runHints = function(hintSteps) {
 
   document.getElementById('hints').innerHTML =
   'Note also that you can restrict the download of environmental data to the Points of Interest. <br>'+
+  'This will download environmental data only for the reefs located the closest to every Point of Interest.  <br>'+
   'To do so, you simply have to check the corresponding box in the bottom of the download menu.<br>'+
   '<button onclick="runHints(30)"> Next </button>'
 
@@ -283,7 +288,7 @@ runHints = function(hintSteps) {
 
   document.getElementById('hints').innerHTML =
   'This is it! You now have a complete overview of the different functionalities of RECIFS. <br>'+
-  'Use the SUPPORT button and contact us if you need additional information.'+
+  'Use the SUPPORT button and contact us if you need additional information. <br>'+
   '<button onclick="runHints(31)"> Next </button>'
 
 }  else if (hintSteps==31) { // 31 ->  END
