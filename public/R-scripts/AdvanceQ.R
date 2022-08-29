@@ -126,17 +126,17 @@ if (input[[1]]$ADVreq$typeVAR=='F') { # if fixed...
     
     if (input[[1]]$ADVreq$fun=='Mean') {
       OUTVAR = apply(OUTVARM, 1, mean, na.rm=T)
-      outvarid = paste0(ENVVAR,'_me_',BUFVAR)}
+      outvarid = paste0(ENVVAR,'_me_',BUFVAR,'_c')}
     if (input[[1]]$ADVreq$fun=='Standard deviation') {
       if (ncol(OUTVARM)<=1) {OUTVAR = rep(0, length=nrow(OUTVARM)); names(OUTVAR) = rownames(OUTVARM)} else {
       OUTVAR = apply(OUTVARM, 1, sd, na.rm=T)}
-      outvarid = paste0(ENVVAR,'_sd_',BUFVAR)} 
+      outvarid = paste0(ENVVAR,'_sd_',BUFVAR,'_c')} 
     if (input[[1]]$ADVreq$fun=='Minimum') {OUTVAR = apply(OUTVARM, 1, min, na.rm=T)   
-      outvarid = paste0(ENVVAR,'_mi_',BUFVAR)}
+      outvarid = paste0(ENVVAR,'_mi_',BUFVAR,'_c')}
     if (input[[1]]$ADVreq$fun=='Maximum') {OUTVAR = apply(OUTVARM, 1, max, na.rm=T)
-      outvarid = paste0(ENVVAR,'_ma_',BUFVAR)}
+      outvarid = paste0(ENVVAR,'_ma_',BUFVAR,'_c')}
     if (input[[1]]$ADVreq$fun=='Median') {OUTVAR = apply(OUTVARM, 1, median, na.rm=T)
-      outvarid = paste0(ENVVAR,'_md_',BUFVAR)}
+      outvarid = paste0(ENVVAR,'_md_',BUFVAR,'_c')}
   }
 }
 
