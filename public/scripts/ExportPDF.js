@@ -71,13 +71,13 @@ map.once('rendercomplete', function() {
         // different types of output, depending if legends are displayed or not      
         if (document.getElementById('cblegend').checked==true&document.getElementById('cblegendSC').checked==false) { // if there is a legend for environmental, but not for SC
 
-          var LPwidth = document.getElementById('legendSVG').clientWidth/scfactor // width of legend plot
-          var LPheight = document.getElementById('legendSVG').clientHeight/scfactor // height of legend plot
+          var LPwidth = document.getElementById('legendplot').clientWidth/scfactor // width of legend plot
+          var LPheight = document.getElementById('legendplot').clientHeight/scfactor // height of legend plot
 
           domtoimage.toJpeg(document.getElementById('legendtitle'), { "bgcolor": 'white' }) // title
         .then(function (dataUrl) {
           pdf.addImage(dataUrl, 'JPEG', posLx, posLy, LTwidth, LTheight); 
-          domtoimage.toJpeg(document.getElementById('legendSVG'), { "bgcolor": 'white' }) // scalebar
+          domtoimage.toJpeg(document.getElementById('legendplot'), { "bgcolor": 'white' }) // scalebar
         .then(function (dataUrl) {
          pdf.addImage(dataUrl, 'JPEG', posLx, posLy+LTheight,  LPwidth, LPheight ); 
          pdf.save('map.pdf'); 
@@ -85,13 +85,13 @@ map.once('rendercomplete', function() {
         }); 
       } else if (document.getElementById('cblegend').checked==false&document.getElementById('cblegendSC').checked==true) { // if there is legend for SC, but not for env
 
-        var LPwidthSC = document.getElementById('legendSVGSC').clientWidth/scfactor // width of legend plot
-        var LPheightSC = document.getElementById('legendSVGSC').clientHeight/scfactor // height of legend plot
+        var LPwidthSC = document.getElementById('legendplotSC').clientWidth/scfactor // width of legend plot
+        var LPheightSC = document.getElementById('legendplotSC').clientHeight/scfactor // height of legend plot
 
         domtoimage.toJpeg(document.getElementById('legendtitleSC'), { "bgcolor": 'white' }) // title
         .then(function (dataUrl) {
           pdf.addImage(dataUrl, 'JPEG', posLxSC, posLySC, LTwidthSC, LTheightSC); 
-          domtoimage.toJpeg(document.getElementById('legendSVGSC'), { "bgcolor": 'white' }) // scalebar
+          domtoimage.toJpeg(document.getElementById('legendplotSC'), { "bgcolor": 'white' }) // scalebar
         .then(function (dataUrl) {
          pdf.addImage(dataUrl, 'JPEG', posLxSC, posLySC+LTheightSC,  LPwidthSC, LPheightSC ); 
          pdf.save('map.pdf'); 
@@ -99,21 +99,21 @@ map.once('rendercomplete', function() {
         }); 
       } else if (document.getElementById('cblegend').checked==true&document.getElementById('cblegendSC').checked==true) { // if there is legend for ENV and SC
 
-        var LPwidth = document.getElementById('legendSVG').clientWidth/scfactor // width of legend plot
-        var LPheight = document.getElementById('legendSVG').clientHeight/scfactor // height of legend plot
-        var LPwidthSC = document.getElementById('legendSVGSC').clientWidth/scfactor // width of legend plot
-        var LPheightSC = document.getElementById('legendSVGSC').clientHeight/scfactor // height of legend plot
+        var LPwidth = document.getElementById('legendplot').clientWidth/scfactor // width of legend plot
+        var LPheight = document.getElementById('legendplot').clientHeight/scfactor // height of legend plot
+        var LPwidthSC = document.getElementById('legendplotSC').clientWidth/scfactor // width of legend plot
+        var LPheightSC = document.getElementById('legendplotSC').clientHeight/scfactor // height of legend plot
 
         domtoimage.toJpeg(document.getElementById('legendtitleSC'), { "bgcolor": 'white' }) // title
         .then(function (dataUrl) {
           pdf.addImage(dataUrl, 'JPEG', posLxSC, posLySC, LTwidthSC, LTheightSC); 
-        domtoimage.toJpeg(document.getElementById('legendSVGSC'), { "bgcolor": 'white' }) // scalebar
+        domtoimage.toJpeg(document.getElementById('legendplotSC'), { "bgcolor": 'white' }) // scalebar
         .then(function (dataUrl) {
          pdf.addImage(dataUrl, 'JPEG', posLxSC, posLySC+LTheightSC,  LPwidthSC, LPheightSC ); 
          domtoimage.toJpeg(document.getElementById('legendtitle'), { "bgcolor": 'white' }) // title
          .then(function (dataUrl) {
            pdf.addImage(dataUrl, 'JPEG', posLx, posLy, LTwidth, LTheight); 
-           domtoimage.toJpeg(document.getElementById('legendSVG'), { "bgcolor": 'white' }) // scalebar
+           domtoimage.toJpeg(document.getElementById('legendplot'), { "bgcolor": 'white' }) // scalebar
          .then(function (dataUrl) {
           pdf.addImage(dataUrl, 'JPEG', posLx, posLy+LTheight,  LPwidth, LPheight ); 
           pdf.save('map.pdf'); 

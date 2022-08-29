@@ -193,13 +193,16 @@ makelegendSC = function(cols, ltext, lwidth, lheight, fontsize, px, py) {
     // update legend on resize window
       
   window.onresize = function() {
+    if (document.getElementById('cblegendSC').checked==true) { // if legend is to be shown
       if (dataSC!=undefined) {
       // update legend
       var width = document.getElementById('legendplotSC').clientWidth // this gives the # of pixels
       var height = document.getElementById('legendplotSC').clientHeight // this gives the # of pixels
       makelegendSC(dataSC.colorscale, dataSC.colorscaleBRK, width, height, 18,10,4   )
     } 
+  }
   
+    if (document.getElementById('cblegend').checked==true) { // if legend is to be shown
     if (mode=='standard') {
       if (dataR=={}) {
       // update legend
@@ -215,6 +218,7 @@ makelegendSC = function(cols, ltext, lwidth, lheight, fontsize, px, py) {
         makelegend(dataRadv.meta.colscale, dataRadv.meta.colscaleBRKS[evaradv], width, height, 18,4,10   )
       } 
     }
+  }
     }
   
   
