@@ -150,7 +150,7 @@ nbrks = 10 # establish number of color breaks
 # check if custom colors
 if (input[[1]]$ADVreq$csCOL$cb==TRUE) { # set customized colorscale
   colors=c(input[[1]]$ADVreq$csCOL$low,input[[1]]$ADVreq$csCOL$mid,input[[1]]$ADVreq$csCOL$max)
-  } else { colors = c('green3','gold2','red1') } # set default colorscale
+  } else { colors = c('red3','orange2','yellow2','purple2','blue3') } # set default colorscale
 
 
 # create colorscale

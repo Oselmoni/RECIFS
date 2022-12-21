@@ -59,7 +59,7 @@ r_summary_AOI=apply(summary_AOI, 2, roundVar)
 
 ### create colorscale for every variable
 nbrks = 10 # establish number of color breaks
-colors = c('green3','gold2','red1')  # establish colorscale
+colors = c('red3','orange2','yellow2','purple2','blue3')  # establish colorscale
 
 # create reef table with colors
 

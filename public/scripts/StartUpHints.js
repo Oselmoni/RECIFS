@@ -6,7 +6,7 @@ var intSteps = 0
 runHints = function() {
 
    if (intSteps==0) {
-     document.getElementById('hints').innerHTML = 'To begin, click on the "AREA OF INTEREST" button, then draw a polygon on the map surrounding a coral reef area of interest. <br>Note that coral reefs areas are highlighted in green.'
+     document.getElementById('hints').innerHTML = 'To begin, click on the "AREA OF INTEREST" button, then draw the corners of a polygon on the map to surround a coral reef area of interest. <br>Note that coral reefs areas are highlighted in green.'
      intSteps=1
  } else if (intSteps==1) {
     document.getElementById('hints').innerText = 'Now click on the "ENVIRONMENT" or the "SEA CURRENTS" buttons, and select an environmental layer to visualize on the map.'
