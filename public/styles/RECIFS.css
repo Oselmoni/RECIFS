@@ -1,6 +1,11 @@
+@font-face {
+  font-family: futuraFont;
+  src: url(FuturaLT.woff);
+}
+
 * {
     box-sizing: border-box;
-    font-family:Futura;
+    font-family:futuraFont;
     margin: 0;
     overflow: hidden
   }
