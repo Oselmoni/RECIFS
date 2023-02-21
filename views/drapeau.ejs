@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="public/drapeau/mystyle.css">
+<link rel="stylesheet" href="public/drapeau/src/ol.css" type="text/css">
+<script src="public/drapeau/src/ol.js"></script>
+<script src="public/drapeau/src/jquery.min.js"></script>
+<script src="public/drapeau/src/proj4.js"></script> 
+<script src='public/drapeau/src/turf.min.js'></script>
+<script src="public/drapeau/src/jspdf.min.js"></script>
+<script src="public/drapeau/src/d3.v4.min.js"></script>
+<script type="text/javascript" src="public/drapeau/NewCaledonia/envarinfo.json"></script>
+<script type="text/javascript" src="public/drapeau/NewCaledonia/conmodinfo.json"></script>
+<script type="text/javascript" src="public/drapeau/NewCaledonia/preset_am.JSON"></script>
+<script type="text/javascript" src="public/drapeau/NewCaledonia/preset_cm.JSON"></script>
+<script type="text/javascript" src="public/drapeau/NewCaledonia/reefsNC.geojson"></script>
+<script type="text/javascript" src="public/drapeau/src/dom-to-image.js"></script>
+
+
+</head>
+<body style="font-family:Verdana;color:rgb(8, 8, 1)">
+
+
+<div id='sidepan'>
+
+    <div id='titlepan'>
+        <img src="public/drapeau/logo.png" id='logo'>
+        <div id='innertitlepan'>
+          <hr style='width: 60%; color: blue;'>
+          <h1 style='display:inline'>DRAPEAU</h1>
+          <hr style='width: 60%; color: blue;'>
+          <p><b>D</b>igital <b>R</b>eef <b>A</b>daptive <b>P</b>otential <b>E</b>v<b>a</b>l<b>u</b>ator</p>
+        </div>
+        </div>
+
+  <div id='sapan'>
+      <button class='helpbutton' onclick="document.getElementById('helpmodalSA').style.display='block'">?</button>
+
+    <h4>Select study area</h4>
+    <select id="starea">
+        <option value="NewCal">New Caledonia</option>
+      </select>
+ 
+      <button>Confirm</button> 
+      <br>
+      <br>
+    Background map:
+    <select id='bgid' onchange='makebg()'>
+      <option value='sat'>Satellite</option>
+      <option value='osm'>Open Street Map</option>
+    </select><br>
+    greyscale <input id='bggsid' type='checkbox' onchange='makebg()'>
+
+  </div>
+
+  <div id='drpan'>
+      <button class='helpbutton' onclick="document.getElementById('helpmodalDR').style.display='block'">?</button>
+
+    <h4>Digital Reef Panel</h4>
+    <table id='drtab' style='width: 100%'>
+
+    </table>
+  
+
+    <button id='addcoral' onclick='addcoral()'>Add Coral</button>
+
+  </div>
+
+  <div id='exportpan'>
+    <button id='expbutCSV' onclick='exportCSV()'>Export data as .csv</button>
+    <button id='expbutGJS' onclick='exportGEOJSON()'>Export data as .geojson</button>
+    <button id='expbutPDF' onclick='exportPDF()'>Export map as .pdf</button>
+  </div>
+
+</div>
+
+<div id='mainpan'>
+  <div id='runpan'>
+      <button class='helpbutton' onclick="document.getElementById('helpmodalRP').style.display='block'">?</button>
+
+      <button class='but' id='butici' onclick='ICImodal()'><b>ICI</b> <br> Inbound Connectivity Index</button> 
+      <button class='but' id='butoci' onclick='OCImodal()'><b>OCI</b> <br> Outbound Connectivity Index</button> 
+      <button class='but' id='butapi' onclick='APImodal()'><b>API</b> <br> Adaptive Potential Index</button> 
+      <button class='but' id='butmpa' onclick='MPAmodal()'><b>MPA-ICI</b> <br> Inbound Connectivity Index of MPA</button> 
+      <button class='but' id='butcn' onclick='CNmodal()'><b>CN-ICI</b> <br> Inbound Connectivity Index of Coral Nurseries</button> 
+
+
+  </div>
+ <div>
+  <div id='map'>
+  
+   <div id='legend'>
+      <div id='legendtitle'>Title of Legend</div>
+      <div id='legendplot'></div>
+
+   </div>
+
+  <div id='modal-ICI'>
+      <button class='helpbutton' onclick="document.getElementById('helpmodalICI').style.display='block'">?</button>
+      <h4> ICI settings</h4>
+      <form>
+        <p id='FstrecICI' style='font-size: 10px;'>Fst threshold</p>
+        <select id="ICIfstdd">
+          <option value="0.0005">0.0005 (low)</option>
+          <option value="0.001">0.001 (medium)</option>
+          <option value="0.01">0.01 (high)</option>
+        </select><br>
+        <p style='font-size: 10px;'>Select a custom Fst threshold: <input type='checkbox' onchange='ICIcustFst()' id='cbICIcfst'></input></p>
+      <input id='FstTici' type="number" step='0.00001' style='display: none'></input>
+      </form>
+     <p style='font-size: 10px;'>Customize colorscale limits: <input id='cbcmICI' onchange='customMAPici()' type='checkbox'></p> 
+      <div id='custmapICI' style='display: none'>
+        Min: <input id='minMici' type='number'><br> Max: <input id='maxMici' type='number'>
+      </div>
+      <button onclick=AJAXICI()>Compute ICI</button>
+  </div>
+
+  <div id='modal-OCI'>
+      <button class='helpbutton' onclick="document.getElementById('helpmodalOCI').style.display='block'">?</button>    <h4> OCI settings</h4>
+      <form>
+        <p id='FstrecOCI' style='font-size: 10px;'>Fst threshold</p>
+        <select id="OCIfstdd">
+          <option value="0.0005">0.0005 (low)</option>
+          <option value="0.001">0.001 (medium)</option>
+          <option value="0.01">0.01 (high)</option>
+        </select><br>
+        <p style='font-size: 10px;'>Select a custom Fst threshold: <input type='checkbox' onchange='OCIcustFst()' id='cbOCIcfst'></input></p>
+      <input id='FstToci' type="number" step='0.00001' style='display: none'></input>
+      </form>
+    <p style='font-size: 10px;'>Customize colorscale limits: <input id='cbcmOCI' onchange='customMAPoci()' type='checkbox'></p> 
+    <div id='custmapOCI' style='display: none'>
+      Min: <input id='minMoci' type='number'><br> Max: <input id='maxMoci' type='number'>
+    </div>
+    <button onclick=AJAXOCI()>Compute OCI</button>
+</div>
+
+<div id='modal-API'>
+    <button class='helpbutton' onclick="document.getElementById('helpmodalAPI').style.display='block'">?</button>
+    <h4> API settings</h4>
+    <p style='font-size: 10px;'>Customize colorscale limits: <input id='cbcmAPI' onchange='customMAPapi()' type='checkbox'></p> 
+  <div id='custmapAPI' style='display: none'>
+    Min: <input id='minMapi' type='number' step='0.01'><br> Max: <input id='maxMapi' type='number' step='0.01'>
+  </div>
+  <button onclick=AJAXAPI()>Compute API</button>
+</div>
+
+<div id='modal-MPA'>
+    <button class='helpbutton' onclick="document.getElementById('helpmodalMPA').style.display='block'">?</button>
+  <h4> MPA settings</h4>
+  <form>
+    <p id='FstrecMPA' style='font-size: 10px;'>Fst threshold</p>
+    <select id="MPAfstdd">
+      <option value="0.0005">0.0005 (low)</option>
+      <option value="0.001">0.001 (medium)</option>
+      <option value="0.01">0.01 (high)</option>
+    </select><br>
+    <p style='font-size: 10px;'>Select a custom Fst threshold: <input type='checkbox' onchange='MPAcustFst()' id='cbMPAcfst'></input></p>
+  <input id='FstTmpa' type="number" step='0.00001' style='display: none'></input>
+  </form><br>
+  <button id='drawmpabut' onclick='drawmpapoly()' style='background-color: white;'>Draw MPAs</button><br>
+  <button id='removempabut' onclick='removempapoly()' style='background-color: white;'>Remove MPAs</button>
+  <br><p style='font-size: 10px;'>Customize colorscale limits: <input id='cbcmMPA' onchange='customMAPmpa()' type='checkbox'></p> 
+  <div id='custmapMPA' style='display: none'>
+    Min: <input id='minMmpa' type='number'><br> Max: <input id='maxMmpa' type='number'>
+  </div>
+  <button onclick=AJAXMPA()>Compute MPA-ICI</button>
+  <p style='color: purple;' id='areampa'></p>
+</div>
+
+<div id='modal-CN'>
+    <button class='helpbutton' onclick="document.getElementById('helpmodalCN').style.display='block'">?</button>
+  <h4> CN settings</h4>
+  <form>
+    <p id='FstrecCN' style='font-size: 10px;'>Fst threshold</p>
+    <select id="CNfstdd">
+      <option value="0.0005">0.0005</option>
+      <option value="0.001">0.001</option>
+      <option value="0.01">0.01</option>
+    </select><br>
+    <p style='font-size: 10px;'>Select a custom Fst threshold: <input type='checkbox' onchange='CNcustFst()' id='cbCNcfst'></input></p>
+  <input id='FstTcn' type="number" step='0.00001' style='display: none'></input>
+  </form><br>
+  <button id='drawcnbut' onclick='drawcnpoints()' style='background-color: white;'>Add Coral Nursery</button><br>
+  <button id='removecnbut' onclick='removemcnpoints()' style='background-color: white;'>Remove Coral Nursery</button>
+  <br><p style='font-size: 10px;'>Customize colorscale limits: <input id='cbcmCN' onchange='customMAPcn()' type='checkbox'></p> 
+  <div id='custmapCN' style='display: none'>
+    Min: <input id='minMcn' type='number'><br> Max: <input id='maxMcn' type='number'>
+  </div>
+  <button onclick=AJAXCN()>Compute CN-ICI</button>
+  <p style='color: blue;' id='nbcn'></p>
+</div>
+
+  </div>
+</div>
+</div>
+
+
+
+
+<div id='modal'class='modal'>
+  <div class='modal-content'>
+    <button class='helpbutton' onclick="document.getElementById('helpmodalCM').style.display='block'">?</button>
+    <h2>Add/edit a coral model</h2>
+    Set a name for the coral model:
+    <input id='cmname' type='text'>
+    <br>
+    <div id='conpan'>
+        <h4>Set Connectivity Model</h4>
+        <br><br><br>
+        Connectivity model preset:
+        <select id="cmod" onchange="createCMplot()">
+        </select><br>
+        <svg id='svgC' width="400" height="300"></svg><br>
+          <button id='ap' onclick='addpoint()'>Add Point</button>
+          <button id='rp' onclick='removepoint()'>Remove Point</button>
+          <button id='mp' onclick='movepoint()'>Move Point</button>
+
+    </div>
+    <div id='adapan'>
+          <h4>Set Adaptive Model (optional)</h4>
+        Define an adaptive model?
+        <select id="adaptYN" onchange="adaptYN()">
+          <option>Yes</option>
+          <option>No</option>
+        </select><br><br>
+        Adaptive model preset:
+        <select id="amod" onchange="settypemodelA()">
+        </select><br>
+        Environmental Variable:    
+        <select id="amenv" onchange="createCMplotA()">
+
+          </select>
+          <svg id='svgA' width="400" height="300"></svg><br>
+          <button id='apA' onclick='addpointA()'>Add Point</button>
+          <button id='rpA' onclick='removepointA()'>Remove Point</button>
+          <button id='mpA' onclick='movepointA()'>Move Point</button>
+
+
+    </div>
+
+    <div id='confirmmodal'>
+        <br>
+        <br>
+        <button id='confmodbut'>Confirm</button>
+        <button onclick='cancelmodal()'>Cancel</button>
+      </div>
+
+  </div>
+
+</div>
+
+<div id='helpmodalSA' class='modal'>
+  <div class='helpmodalcontent'>
+      <h3>Study area control panel</h3>
+      <p>This panel allows you to choose on which region to work on. For the moment, only the reefs of New Caledonia are available. <br> <br>
+      The panel also allows to choose the background map type.  </p>
+      <button onclick="document.getElementById('helpmodalSA').style.display='none'">Close Help</button>
+  </div>
+</div>
+
+<div id='helpmodalDR' class='modal'>
+    <div class='helpmodalcontent'>
+        <h3>Digital reef control panel</h3>
+        <p> The digital reef represents a group of corals of different type ("coral models") 
+          for which the connectivity and adaptive potential indices are computed. <br> <br>
+
+          This panel resumes the coral models added to the digital reef. <br>
+          If you want to add a new coral model, click on the <button>Add Coral</button> button. <br>
+          For every coral model, the table shows: <ul>
+              <li>the name of the coral model </li>
+              <li> the environmental variable used in the adaptive model (env)</li>
+              <li> the maximal-Fst recommended thresholds (inbound: Fst-I, outbound: Fst-O)</li>
+              <li> a button to edit the coral model (<button style='background-color: yellow;'>E</button>) </li>
+              <li> a button to remove the coral model (<button style='background-color: red;'>-</button>) </li>
+              <li> a checkbox (<input type='checkbox'>) to decide whether to use or not the coral model in the indices computation </li>
+          </ul> 
+          
+        </p>
+        <button onclick="document.getElementById('helpmodalDR').style.display='none'">Close Help</button>
+    </div>
+</div>
+
+<div id='helpmodalCM' class='modal'>
+    <div class='helpmodalcontent'>
+        <h3>Coral model editing panel</h3>
+        <p> A coral model represents a particular type of coral species or population. It is
+          described by two parameters: the connectivity model and the adaptive model. 
+            <br> <br>
+
+            <ul><li><b>Connectivity Model</b></li></ul>
+        
+            The connectivity model describes how the coral model is expected to disperse. It is defined
+            by the relationship between sea-distance (a standardized metric based on sea current movements
+            elaborated during the SABLE project) and Fst (a standard measure of genetic differentiation between populations).
+            Every coral species has a different relationship between Fst and sea-distance, depending on the dispersal capabilities.
+            This relationship can be evaluated through seascape genetics experiments. The connectivity model preset
+            allows you to access connectivity models based on this kind of studies.
+            You can use the buttons under the graph (<button>Add point</button>,<button>Move point</button>,<button>Remove point</button>)
+            to create a custom connectivty model or modify an existing one. 
+          
+            <ul><li><b>Adaptive Model</b></li></ul>
+        
+           Adaptive model is optional and required only for the computation of the Adaptive Potential Index (API). 
+           This kind of model describes the probability of carrying an adaptive trait/genotype given a determined 
+           range of a specific environmental variable. This kind of models are discovered in seascape genomics experiments.
+           You can use the "Adaptive model preset" dropdown menu to select an existing adaptive model found during the SABLE project.
+           You can use the buttons under the graph (<button>Add point</button>,<button>Move point</button>,<button>Remove point</button>)
+           to create a custom adaptive model or modify an existing one. 
+            
+  
+          
+        </p>
+        <button onclick="document.getElementById('helpmodalCM').style.display='none'">Close Help</button>
+    </div>
+</div>
+
+<div id='helpmodalRP' class='modal'>
+    <div class='helpmodalcontent'>
+        <h3>Indices selection control panel</h3>
+        <p>In this panel you can choose which index to compute. Five different options are available: 
+
+            <ul>
+                <li><b>Inbound Connectivity Index (ICI)</b>: describes how each reef is expected 
+                  to receive dispersal from other reefs. </li>
+                <li><b>Outbound Connectivity Index (OCI)</b>: describes how each reef is expected 
+                  to disperse towards other reefs. </li>       
+                <li><b>Adaptive Potential Index (API)</b>: describes how 
+                each reef is expected to be adapted to a specific climatic constraints.  </li> 
+                <li><b>Inbound Connectivity Index of Marine Protected Areas (MPA-ICI)</b>: 
+                  an interactive mode. After drawing marine protected areas (MPA) on the map, this mode
+                  computes the ICI from these areas. 
+                </li>    
+                <li><b>Inbound Connectivity Index of Coral Nurseries (CN-ICI)</b>: 
+                  an interactive mode. The user can add to the map the emplacement of coral nurseries at specific reef. 
+                  This mode then computes the ICI from these sites. 
+                </li>           
+
+       
+       
+                </ul> 
+
+
+        </p>
+        <button onclick="document.getElementById('helpmodalRP').style.display='none'">Close Help</button>
+    </div>
+</div>
+
+
+<div id='helpmodalICI' class='modal'>
+    <div class='helpmodalcontent'>
+        <h3>Inbound Connectivity Index (ICI) computation</h3>
+        <p>
+          The Inbound Connectivity Index (ICI) describes the estimated
+          dispersal <b>towards</b> each reef of the study area. This index is based on the connectivity models
+          of coral models in the digital reef. <br><br>
+
+          For a specific reef, the ICI represents the total area of the 
+          surrounding reefs that can disperse towards the specific reef. The maximal distance of
+          "surrounding reefs" depends on the Fst threshold (Fst-I) specified before computation. <br><br>
+
+          A low Fst threshold will account for the reefs closely surrounding a focal reef, while
+          a higher value will include further reefs in the calculation.
+          The Fst threshold should not exceed the recommended value, in order to avoid bias due 
+          to border effects. <br><br>
+          
+          A high ICI indicates a reef receiving dispersal from a large reef
+          surface, while a low ICI a reef receiving limited dispersal (i.e. potentially isolated reef). <br><br>
+           
+          If you want to compare ICI for different coral models, or different digital reefs, make sure 
+          to use a common Fst threshold (not exceeding the recommended values) and to set 
+          fixed limits in the color scale by clicking on the corresponding checkbox (<input type='checkbox'>). 
+        </p>
+        <button onclick="document.getElementById('helpmodalICI').style.display='none'">Close Help</button>
+    </div>
+</div>
+
+<div id='helpmodalOCI' class='modal'>
+    <div class='helpmodalcontent'>
+        <h3>Outbond Connectivity Index (OCI) computation</h3>
+        <p>
+            <p>
+                The Outbound Connectivity Index (OCI) describes the estimated
+                dispersal <b>from</b> each reef of the study area. This index is based on the connectivity models
+                of coral models in the digital reef. <br><br>
+      
+                For a specific reef, the OCI represents the total area of the 
+                surrounding reefs that can disperse to from the specific reef. The maximal distance of
+                "surrounding reefs" depends on the Fst threshold specified (Fst-O) before computation. <br><br>
+      
+                A low Fst threshold will account for the reefs closely surrounding a focal reef, while
+                a higher value will include further reefs in the calculation.
+                The Fst threshold should not exceed the recommended value, in order to avoid bias due 
+                to border effects. <br><br>
+                
+                A high OCI indicates a reef dispersing to a large reef
+              surface (i.e. potential source for the reef system), while a low OCI a reef with limited dispersal potential. <br><br>
+                 
+                If you want to compare OCI for different coral models, or different digital reefs, make sure 
+                to use a common Fst threshold (not exceeding the recommended values) and to set 
+                fixed limits in the color scale by clicking on the corresponding checkbox (<input type='checkbox'>). 
+              </p>
+
+        </p>
+        <button onclick="document.getElementById('helpmodalOCI').style.display='none'">Close Help</button>
+    </div>
+</div>
+
+
+
+<div id='helpmodalAPI' class='modal'>
+    <div class='helpmodalcontent'>
+        <h3>Adaptive Potential Index (API) computation</h3>
+        <p>
+            The Adaptive Potential Index (API) describes the estimated
+            adaptive potential for every reef of the study area. This index is based on the adaptive model
+            of corals in the digital reef. <br><br>
+              
+            For a specific reef, the API represents the <b> probability of adaptation </b> to a specific climatic constraint. 
+
+            <br><br>
+            If more than one coral is present in the digital reef panel, the API represents the average probability between all the corals in the digital reef.
+            In this case, be aware that the adaptive models describing the digital reef should be based on the same environmental variables. 
+
+            <br><br>
+             
+            If you want to compare API for different coral models, or different digital reefs, make sure 
+             to leave fixed limits in the color scale.
+
+             <br><br>
+
+            </p>
+        <button onclick="document.getElementById('helpmodalAPI').style.display='none'">Close Help</button>
+    </div>
+</div>
+
+<div id='helpmodalMPA' class='modal'>
+    <div class='helpmodalcontent'>
+        <h3>Inbound Connectivity Index of Marine Protected Areas (MPA-ICI) computation</h3>
+        <p>
+            The MPA-ICI allows to estimate the potential dispersal from marine protected areas (MPAs) set-ups
+            defined by the user. <br><br>
+
+            By clicking on the <button>Draw MPAs</button> button, the user can draw one or polygon 
+            representing MPAs. The algorithm then computes Inbound Connectivity Index (ICI) from these areas.
+            The <button>Remove MPAs</button> button allows to remove MPAs previously drawn. 
+
+            The ICI describes the estimated
+            dispersal <b>towards</b> each reef of the study area. This index is based on the connectivity models
+            of coral models in the digital reef. <br><br>
+  
+            For a specific reef, the MPA-ICI represents the total area of the 
+            surrounding reefs <b>inside the MPAs</b> that can disperse towards the specific reef. The maximal distance of
+            "surrounding reefs" depends on the Fst threshold (Fst-I) specified before computation. <br><br>
+  
+            A low Fst threshold will account for the reefs closely surrounding a focal reef, while
+            a higher value will include further reefs in the calculation.
+            The Fst threshold should not exceed the recommended value, in order to avoid bias due 
+            to border effects. <br><br>
+            
+            A high MPA-ICI indicates a reef receiving dispersal from a large reef
+            surface of the MPAs, while a low MPA-ICI a reef receiving limited dispersal from the MPAs. <br><br>
+             
+            If you want to compare MPA-ICI for different coral models, different digital reefs or different MPA set-ups, make sure 
+            to use a common Fst threshold (not exceeding the recommended values) and to set 
+            fixed limits in the color scale by clicking on the corresponding checkbox (<input type='checkbox'>). 
+          </p>
+        <button onclick="document.getElementById('helpmodalMPA').style.display='none'">Close Help</button>
+    </div>
+</div>
+
+<div id='helpmodalCN' class='modal'>
+    <div class='helpmodalcontent'>
+        <h3>Inbound Connectivity Index of Coral Nurseries (CN-ICI) computation</h3>
+        <p>
+          The CN-ICI allows to estimate the potential dispersal from coral nurseries (CNs) emplacements
+            defined by the user. <br><br>
+
+            By clicking on the <button>Add Coral Nursery</button> button, the user can select on which reef(s)
+            to establish a CN. The algorithm then computes Inbound Connectivity Index (ICI) from this reef(s).
+            The <button>Remove Coral Nursery</button> button allows to remove CNs previously added. 
+
+            The ICI describes the estimated
+            dispersal <b>towards</b> each reef of the study area. This index is based on the connectivity models
+            of coral models in the digital reef. <br><br>
+  
+            For a specific reef, the CN-ICI represents the total area of the 
+            surrounding reefs <b>set as CNs</b> that can disperse towards the specific reef. The maximal distance of
+            "surrounding reefs" depends on the Fst threshold (Fst-I) specified before computation. <br><br>
+  
+            A low Fst threshold will account for the reefs closely surrounding a focal reef, while
+            a higher value will include further reefs in the calculation.
+            The Fst threshold should not exceed the recommended value, in order to avoid bias due 
+            to border effects. <br><br>
+            
+            A high CN-ICI indicates a reef receiving dispersal from a large reef
+            surface of reefs set as CN, while a low CN-ICI a reef receiving limited dispersal from the CNs. <br><br>
+             
+            If you want to compare CN-ICI for different coral models, different digital reefs or different CNs emplacements, make sure 
+            to use a common Fst threshold (not exceeding the recommended values) and to set 
+            fixed limits in the color scale by clicking on the corresponding checkbox (<input type='checkbox'>). 
+      </p>
+        <button onclick="document.getElementById('helpmodalCN').style.display='none'">Close Help</button>
+    </div>
+</div>
+
+
+
+
+<script src='public/drapeau/index.js'></script>
+</body>
+</html>
