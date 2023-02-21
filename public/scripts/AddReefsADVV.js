@@ -205,9 +205,9 @@ STMOD = function() {
     var midCOL = document.getElementById('midCOL')
     var highCOL = document.getElementById('highCOL')
   
-    lowCOL.value='#5cca3a'
-    midCOL.value='#e5b43c'
-    highCOL.value='#e93322'
+    lowCOL.value='#3d03a8'
+    midCOL.value='#d69b00'
+    highCOL.value='#bf0000'
   
     if  (customizeCSCcb.checked == true) {
       lowCOL.disabled=false    
