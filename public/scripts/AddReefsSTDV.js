@@ -13,7 +13,26 @@ addReefs = function(nevar, data) {
     // add panels
     document.getElementById('topBUTsc').disabled=false
     document.getElementById('topBUTenv').disabled=false
-    document.getElementById('topBUTdwn').disabled=false}
+    document.getElementById('topBUTdwn').disabled=false
+    // add invisible reefs to map 
+
+    reefsSource.clear()      // clear source
+
+    for (var i=0; i<data.features.length; i++) {
+  
+      var reef = new ol.Feature({
+          geometry: new ol.geom.Point(ol.proj.fromLonLat(data.features[i].geometry.coordinates)),
+          name: data.features[i].properties.id,
+          val : '',
+          col : [0,0,0,0],// transparent color
+        })  
+  
+      reefsSource.addFeature(reef) // add to source 
+  
+      }
+    
+  
+  }
   else {
 
   // find component of variable (environmental variable + statistic) for legend
