@@ -1,1 +1,16 @@
-versionINFO = {'DB' : { 'version' : '1.0.0' , releaseDate : '31.03.2022'} , 'webapp' : {'version' : '1.0.5', releaseDate : '21.02.2023' }, 'tutorial' : {'version' : '1.0.0', releaseDate : '02.06.2022' }}
+versionINFO = {
+    'DB' : [{ 'version' : '1.0.0' , 'releaseDate' : '31.03.2022', 'description' : 'First release.'}],
+
+
+    'webapp' : [{'version' : '1.0.6', 'releaseDate' : '27.03.2024' , 'description' : 'Added link to paper in Support panel. Added transparent reefs load after AOI selection. New versioning mode, all past version info are stored and described in the version.json file.'  },
+                {'version' : '1.0.5', 'releaseDate' : '21.02.2023' , 'description' : 'Inverted colorscale blue vs. red.'  },
+                {'version' : '1.0.4', 'releaseDate' : '17.02.2023' , 'description' : 'Added readme on github, webofonts added to css'  },
+                {'version' : '1.0.3', 'releaseDate' : '21.12.2022' , 'description' : 'Changed colorscale to colorblind friendly palette.'  },
+                {'version' : '1.0.2', 'releaseDate' : '29.08.2022' , 'description' : 'Fixed bug of PDFexport on chrome, fixed bug when resizing legends.'  },
+                {'version' : '1.0.1', 'releaseDate' : '29.08.2022' , 'description' : 'Fixed bug of exportCSV of advanced mean and sd.'  },
+                {'version' : '1.0.0', 'releaseDate' : '13.06.2022' , 'description' : 'First release.'  }
+                ],
+    
+    
+    'tutorial' : [{'version' : '1.0.0', 'releaseDate' : '02.06.2022' , 'description' : 'First release'}]
+}

@@ -1,7 +1,7 @@
 // script to add version info to support tab
-
-document.getElementById('versionINFO').innerHTML = 'Database version: '+ versionINFO.DB.version + ' (released '+versionINFO.DB.releaseDate+')'+
+// note: the [1] makes sure that only the latest version is reported. 
+document.getElementById('versionINFO').innerHTML = 'Database version: '+ versionINFO.DB[0].version + ' (released '+versionINFO.DB[0].releaseDate+')'+
                                                     '<br>'+
-                                                    'Web-app version: '+ versionINFO.webapp.version + ' (released '+versionINFO.webapp.releaseDate+')'+
+                                                    'Web-app version: '+ versionINFO.webapp[0].version + ' (released '+versionINFO.webapp[0].releaseDate+')'+
                                                     '<br>'+
-                                                    'Tutorial version: '+ versionINFO.tutorial.version + ' (released '+versionINFO.tutorial.releaseDate+')'
+                                                    'Tutorial version: '+ versionINFO.tutorial[0].version + ' (released '+versionINFO.tutorial[0].releaseDate+')'
