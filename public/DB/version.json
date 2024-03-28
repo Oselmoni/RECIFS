@@ -1,5 +1,6 @@
 versionINFO = {
-    'DB' : [{ 'version' : '1.0.0' , 'releaseDate' : '31.03.2022', 'description' : 'First release.'}],
+    'DB' : [{ 'version' : '2.0.0' , 'releaseDate' : '28.03.2024', 'description' : 'Second release. CHL and SPM entirely replaced with new products (1997-2023). DHW and SST updated to 2023. SSS and SCV updated to 2021. FE,PH,NO3,PO4,O2 updated to 2022. VBD updated to 2021.'},
+            { 'version' : '1.0.0' , 'releaseDate' : '31.03.2022', 'description' : 'First release.'}],
 
 
     'webapp' : [{'version' : '1.0.6', 'releaseDate' : '27.03.2024' , 'description' : 'Added link to paper in Support panel. Added transparent reefs load after AOI selection. New versioning mode, all past version info are stored and described in the version.json file.'  },
