@@ -4,7 +4,8 @@ versionINFO = {
             { 'version' : '1.0.0' , 'releaseDate' : '31.03.2022', 'description' : 'First release.'}],
 
 
-    'webapp' : [{'version' : '1.0.6', 'releaseDate' : '27.03.2024' , 'description' : 'Added link to paper in Support panel. Added transparent reefs load after AOI selection. New versioning mode, all past version info are stored and described in the version.json file.'  },
+    'webapp' : [{'version' : '1.0.7', 'releaseDate' : '12.01.2026' , 'description' : 'Update contact e-mail.'  },
+                {'version' : '1.0.6', 'releaseDate' : '27.03.2024' , 'description' : 'Added link to paper in Support panel. Added transparent reefs load after AOI selection. New versioning mode, all past version info are stored and described in the version.json file.'  },
                 {'version' : '1.0.5', 'releaseDate' : '21.02.2023' , 'description' : 'Inverted colorscale blue vs. red.'  },
                 {'version' : '1.0.4', 'releaseDate' : '17.02.2023' , 'description' : 'Added readme on github, webofonts added to css'  },
                 {'version' : '1.0.3', 'releaseDate' : '21.12.2022' , 'description' : 'Changed colorscale to colorblind friendly palette.'  },
